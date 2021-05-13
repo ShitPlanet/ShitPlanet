@@ -1,0 +1,21 @@
+{
+  "presets": ["next/babel"],
+  "plugins": [
+    // [
+    //   "styled-components",
+    //   { "ssr": true, "displayName": true, "preprocess": false }
+    // ],
+    // 参考：https://github.com/vercel/next.js/issues/7322#issuecomment-797584882
+    [
+      "babel-plugin-styled-components",
+      {
+        "ssr": true,
+        "minify": true,
+        "transpileTemplateLiterals": true,
+        "pure": true,
+        "displayName": true,
+        "preprocess": false
+      }
+    ]
+  ]
+}
