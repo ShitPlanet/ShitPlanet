@@ -144,6 +144,7 @@ html {
 a {
   color: white;
   text-decoration: none;
+  cursor: pointer;
 }
 a:hover {
   text-decoration: underline;
@@ -197,6 +198,18 @@ body > a:first-of-type {
   display: none;
 }
 
+@font-face {
+  font-family: 'OpenSans';
+  src: url(/font/OpenSans-Regular.ttf);
+}
+@font-face {
+  font-family: 'OpenSans italic';
+  src: url(/font/OpenSans-Italic.ttf);
+}
+@font-face {
+  font-family: 'Bungee';
+  src: url(/font/Bungee-Regular.ttf);
+}
 @font-face {
   font-family: 'IBMPlexSans';
   src: url(/font/IBMPlexSans-Regular.ttf);
@@ -286,4 +299,12 @@ html {
   html {
     font-size: 62.5%;
   }
+}
+
+.test {
+  position: absolute;
+  width: 40vw;
+  height: 14.7vw;
+  left: -5vw;
+  bottom: -6.4vw;
 }

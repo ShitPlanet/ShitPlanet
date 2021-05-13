@@ -33,7 +33,6 @@
     "next-optimized-images": "^2.6.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "sass": "^1.32.13",
     "smooth-scroll": "^16.1.1",
     "styled-components": "^5.1.1",
     "svg-sprite-loader": "^4.1.6"
