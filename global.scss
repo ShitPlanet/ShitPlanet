@@ -124,7 +124,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
+  content: '';
   content: none;
 }
 table {
@@ -139,7 +139,7 @@ body {
 
 html {
   scroll-behavior: smooth;
-  font-family: "Source Sans Pro", Helvetica;
+  font-family: 'Source Sans Pro', Helvetica;
 }
 a {
   color: white;
@@ -195,4 +195,95 @@ body::-webkit-scrollbar-thumb {
 
 body > a:first-of-type {
   display: none;
+}
+
+@font-face {
+  font-family: 'IBMPlexSans';
+  src: url(/font/IBMPlexSans-Regular.ttf);
+}
+@font-face {
+  font-family: 'IBMPlexSans bold';
+  src: url(/font/IBMPlexSans-Bold.ttf);
+}
+@font-face {
+  font-family: 'IBMPlexSans light';
+  src: url(/font/IBMPlexSans-Light.ttf);
+}
+@font-face {
+  font-family: 'IBMPlexSans medium';
+  src: url(/font/IBMPlexSans-Medium.ttf);
+}
+@font-face {
+  font-family: 'Lexend';
+  src: url(/font/Lexend-Regular.ttf);
+}
+@font-face {
+  font-family: 'Lexend bold';
+  src: url(/font/Lexend-Bold.ttf);
+}
+@font-face {
+  font-family: 'Lexend light';
+  src: url(/font/Lexend-Light.ttf);
+}
+@font-face {
+  font-family: 'Lexend medium';
+  src: url(/font/Lexend-Medium.ttf);
+}
+
+html {
+  font-size: 12.16%;
+}
+
+@media (min-width: 373.98px) {
+  html {
+    font-size: 12.16%;
+  }
+}
+
+@media (min-width: 473.98px) {
+  html {
+    font-size: 15.43%;
+  }
+}
+
+@media (min-width: 575.98px) {
+  html {
+    font-size: 18.75%;
+  }
+}
+
+@media (min-width: 767.98px) {
+  html {
+    font-size: 25%;
+  }
+}
+
+@media (min-width: 991.98px) {
+  html {
+    font-size: 32.29%;
+  }
+}
+
+@media (min-width: 1199.98px) {
+  html {
+    font-size: 39%;
+  }
+}
+
+@media (min-width: 1399.98px) {
+  html {
+    font-size: 45.57%;
+  }
+}
+
+@media (min-width: 1669.98px) {
+  html {
+    font-size: 54.36%;
+  }
+}
+
+@media (min-width: 1779.98px) {
+  html {
+    font-size: 62.5%;
+  }
 }
