@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 import Image from 'next/image'
+import { useEffect, useRef } from 'react'
+import Lottie from 'lottie-web'
 
 const BG = styled.div`
   position: absolute;
@@ -8,6 +10,11 @@ const BG = styled.div`
   top: -2vw;
   background: linear-gradient(180deg, #25223f 0%, #203459 50.53%, #202a4f 100%);
   z-index: -100;
+`
+const Stars = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
 `
 const Img1 = styled.div`
   position: absolute;
@@ -71,9 +78,22 @@ interface IProps {
   phase: number
 }
 const Background = (props: IProps) => {
+  const dom = useRef<HTMLDivElement>()
+
+  useEffect(() => {
+    Lottie.loadAnimation({
+      container: dom.current, // the dom element that will contain the animation
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: '/starmovin.json'
+    })
+  }, [])
+
   return (
     <Wrap className={`phase_${props.phase}`}>
       <BG></BG>
+      <Stars ref={dom}></Stars>
       {props.phase === 3 ? null : (
         <Img1>
           <Image src='/image/aircraft.svg' layout='fill' />
