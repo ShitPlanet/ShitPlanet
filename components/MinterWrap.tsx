@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components'
+import Loading from './Loading'
 
 const zoomIn = keyframes`
 0% {
@@ -78,6 +79,14 @@ const Wrap = styled.div`
     opacity: 1;
   }
 `
+const LoadingWrap = styled.div`
+  position: absolute;
+  width: 10vw;
+  height: 10vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`
 
 interface IProps {
   phase: number
@@ -90,6 +99,9 @@ const MinterWrap = (props: IProps) => {
       <SubTitle>Blackhole for Shit Tokens</SubTitle>
       <Card>
         <Button onClick={props.cancel}>Back</Button>
+        <LoadingWrap>
+          <Loading />
+        </LoadingWrap>
       </Card>
     </Wrap>
   )

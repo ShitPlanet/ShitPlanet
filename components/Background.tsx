@@ -11,6 +11,14 @@ const BG = styled.div`
   background: linear-gradient(180deg, #25223f 0%, #203459 50.53%, #202a4f 100%);
   z-index: -100;
 `
+const Div = styled.div`
+  width: 100%;
+  height: 100%;
+  background-image: url(/image/stars.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: repeat;
+`
 const Stars = styled.div`
   position: absolute;
   width: 100%;
@@ -81,19 +89,21 @@ const Background = (props: IProps) => {
   const dom = useRef<HTMLDivElement>()
 
   useEffect(() => {
-    Lottie.loadAnimation({
-      container: dom.current, // the dom element that will contain the animation
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      path: '/starmovin.json'
-    })
-  }, [])
+    if (props.phase !== 3) {
+      Lottie.loadAnimation({
+        container: dom.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '/starmovin.json'
+      })
+    }
+  }, [props.phase])
 
   return (
     <Wrap className={`phase_${props.phase}`}>
       <BG></BG>
-      <Stars ref={dom}></Stars>
+      {props.phase === 3 ? <Div></Div> : <Stars ref={dom}></Stars>}
       {props.phase === 3 ? null : (
         <Img1>
           <Image src='/image/aircraft.svg' layout='fill' />
