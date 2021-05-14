@@ -47,7 +47,7 @@ const NFTList = () => {
         <Container>
           <label>NFT lists</label>
           <List>
-            {Array(9)
+            {Array(6)
               .fill('1')
               .map((i, index) => (
                 <Item key={index}></Item>
