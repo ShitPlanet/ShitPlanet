@@ -23,6 +23,13 @@ const Stars = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+  & div {
+    width: 100vw;
+    height: 56.25vw;
+  }
+  & div:last-child {
+    margin-top: -10vw;
+  }
 `
 const Img1 = styled.div`
   position: absolute;
@@ -86,24 +93,40 @@ interface IProps {
   phase: number
 }
 const Background = (props: IProps) => {
-  const dom = useRef<HTMLDivElement>()
-
+  const dom1 = useRef<HTMLDivElement>()
+  const dom2 = useRef<HTMLDivElement>()
   useEffect(() => {
     if (props.phase !== 3) {
       Lottie.loadAnimation({
-        container: dom.current,
+        container: dom1.current,
         renderer: 'svg',
         loop: true,
         autoplay: true,
         path: '/starmovin.json'
       })
+      const val = Lottie.loadAnimation({
+        container: dom2.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '/starmovin.json'
+      })
+      val.setSpeed(0.8)
     }
   }, [props.phase])
 
   return (
     <Wrap className={`phase_${props.phase}`}>
       <BG></BG>
-      {props.phase === 3 ? <Div></Div> : <Stars ref={dom}></Stars>}
+      {props.phase === 3 ? (
+        <Div></Div>
+      ) : (
+        <Stars>
+          <div ref={dom1}></div>
+          <div ref={dom2}></div>
+        </Stars>
+      )}
+      {/* {props.phase === 3 ? <Div></Div> : <Stars ref={dom}></Stars>} */}
       {props.phase === 3 ? null : (
         <Img1>
           <Image src='/image/aircraft.svg' layout='fill' />
