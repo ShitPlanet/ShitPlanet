@@ -18,15 +18,6 @@ const Img1 = styled.div`
   transform: rotate(43deg);
   transition: left 600ms ease-out, top 600ms ease-out, transform 800ms ease-out;
 `
-const Img2 = styled.div`
-  position: absolute;
-  width: 29vw;
-  height: 32.5vw;
-  left: 72vw;
-  top: 27vw;
-  transform: rotate(10.72deg);
-  transition: left 600ms ease-out, top 600ms ease-out, transform 800ms ease-out;
-`
 const Img3 = styled.div`
   position: absolute;
   width: 5vw;
@@ -43,6 +34,7 @@ const Img4 = styled.div`
   top: 12.4vw;
   mix-blend-mode: normal;
   opacity: 0.73;
+  transition: left 700ms 100ms ease-out;
 `
 const Img5 = styled.div`
   position: absolute;
@@ -63,15 +55,11 @@ const Wrap = styled.div`
     top: 3.5vw;
     transform: rotate(0);
   }
-  &.phase_2 ${Img2} {
-    top: 28.9vw;
-    left: -3.4vw;
-    transform: rotate(15.96deg);
-  }
   &.phase_2 ${Img3} {
     left: -2.5vw;
   }
   &.phase_2 ${Img4} {
+    left: 107vw;
   }
   &.phase_2 ${Img5} {
     left: 79vw;
@@ -86,18 +74,19 @@ const Background = (props: IProps) => {
   return (
     <Wrap className={`phase_${props.phase}`}>
       <BG></BG>
-      <Img1>
-        <Image src='/image/aircraft.svg' layout='fill' />
-      </Img1>
-      <Img2>
-        <Image src='/image/ufo.svg' layout='fill' />
-      </Img2>
+      {props.phase === 3 ? null : (
+        <Img1>
+          <Image src='/image/aircraft.svg' layout='fill' />
+        </Img1>
+      )}
       <Img3>
         <Image src='/image/sun.svg' layout='fill' />
       </Img3>
-      <Img4>
-        <Image src='/image/saturn.svg' layout='fill' />
-      </Img4>
+      {props.phase === 3 ? null : (
+        <Img4>
+          <Image src='/image/saturn.svg' layout='fill' />
+        </Img4>
+      )}
       <Img5>
         <Image src='/image/moon.svg' layout='fill' />
       </Img5>

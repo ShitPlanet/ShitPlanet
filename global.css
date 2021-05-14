@@ -302,9 +302,7 @@ html {
 }
 
 .test {
-  position: absolute;
-  width: 40vw;
-  height: 14.7vw;
-  left: -5vw;
-  bottom: -6.4vw;
+  border: none;
+  background-color: transparent;
+  padding: 0;
 }

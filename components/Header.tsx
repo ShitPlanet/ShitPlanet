@@ -13,7 +13,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
 `
-const Brand = styled.div`
+const Brand = styled.a`
   height: 4.2vw;
 `
 const ImgWrap = styled.div`
@@ -34,7 +34,6 @@ const Nav = styled.div``
 const Link = styled.a`
   margin-left: 2.8vw;
   font-family: Impact;
-  font-weight: 900;
   font-size: 1.3vw;
   color: #698edb;
   &:first-child {
@@ -42,6 +41,7 @@ const Link = styled.a`
   }
   &:hover {
     text-decoration: none;
+    color: #d6e3ff;
   }
 `
 
@@ -49,7 +49,7 @@ const Header = () => {
   return (
     <Div>
       <Container>
-        <Brand>
+        <Brand href='/'>
           <ImgWrap>
             <Image src='/image/brand.svg' layout='fill' />
           </ImgWrap>
@@ -58,7 +58,7 @@ const Header = () => {
           </Name>
         </Brand>
         <Nav>
-          <Link href='#'>NFT lists</Link>
+          <Link href='/nftlist'>NFT lists</Link>
           <Link href='#'>Features</Link>
           <Link href='#'>Team</Link>
           <Link href='#'>Sign in</Link>
