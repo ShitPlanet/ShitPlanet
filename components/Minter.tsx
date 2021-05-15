@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Selector from './Selector'
 import { useState, useCallback, useEffect, useMemo } from 'react'
 import shitAbi from '@/config/abi/shit.json'
+import shitboxAbi from '@/config/abi/shitbox.json'
 import template from '@/config/abi/template.json'
 import address from '@/config/constants/address.json'
 import { useStore } from '@/store'
@@ -97,16 +98,24 @@ const Minter = observer((props: IProps) => {
 
   const state = useLocalStore(() => ({
     shitContract: null,
+    shitboxContract: null,
     provider: null,
     signer: null,
     disabled: false,
     setDisabled(value) {
       this.disabled = value
     },
-    approved: false
+    approved: false,
+    token: null,
+    setToken(value: string) {
+      this.token = value
+    },
+    mintValue: '',
+    setMintValue(value) {
+      this.mintValue = value
+    }
   }))
 
-  const [token, setToken] = useState('0')
   const [price, setPrice] = useState('')
   const [expect, setExpect] = useState('')
 
@@ -124,6 +133,11 @@ const Minter = observer((props: IProps) => {
         state.shitContract = new ethers.Contract(
           address.shit,
           shitAbi,
+          state.signer
+        )
+        state.shitboxContract = new ethers.Contract(
+          address.shitbox,
+          shitboxAbi,
           state.signer
         )
       } catch (error) {}
@@ -149,7 +163,7 @@ const Minter = observer((props: IProps) => {
           })
         )
         setShitTokenList(shitTokenList)
-        setToken((shitTokenList[0] as any).address)
+        state.setToken((shitTokenList[0] as any).address)
 
         const allowance = await state.shitContract.allowance(
           store.account,
@@ -177,20 +191,42 @@ const Minter = observer((props: IProps) => {
     }
   }, [state.shitContract])
 
+  const mint = useCallback(async () => {
+    try {
+      props.setLoading(true)
+      const tx = await state.shitboxContract.mintShitBox(
+        state.token,
+        ethers.BigNumber.from(state.mintValue)
+      )
+      await tx.wait()
+    } catch (error) {
+      console.log(error)
+    } finally {
+      props.setLoading(false)
+    }
+  }, [state.shitContract])
+
   return (
     <Div>
       <InputGroup>
-        <input type='text' placeholder='Destroyed Quantity' />
+        <input
+          value={state.mintValue}
+          onChange={e => {
+            state.setMintValue(e.target.value)
+          }}
+          type='number'
+          placeholder='Destroyed Quantity'
+        />
         <button>MAX</button>
       </InputGroup>
       <Selector
         placeholder=''
-        value={token}
+        value={state.token}
         options={shitTokenList.map((token, index) => ({
           label: token.name,
           value: token.address
         }))}
-        onChange={val => setToken(val)}
+        onChange={val => state.setToken(val)}
       />
       <Price>Token Price: {price || '3.1100'}</Price>
       <Expect>Expected Mint: {expect || '13.5554'}</Expect>
@@ -200,11 +236,7 @@ const Minter = observer((props: IProps) => {
           if (!state.approved) {
             approve()
           } else {
-            props.setLoading(true)
-            setTimeout(() => {
-              props.setLoading(false)
-              props.setNewlyMinted({ level: 1 })
-            }, 2000)
+            mint()
           }
         }}>
         <svg
