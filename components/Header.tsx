@@ -65,6 +65,10 @@ const Header = () => {
         if (account) {
           setAccount(account)
         }
+        const chainId = await ethereum.request({ method: 'eth_chainId' })
+        ethereum.on('chainChanged', _chainId => {
+          window.location.reload()
+        })
       } catch (error) {}
     })()
   }, [])
