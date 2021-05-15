@@ -45,6 +45,11 @@ const Link = styled.a`
   }
 `
 
+const Button = styled.button`
+  margin-left: 2.8vw;
+  font-size: 1.3vw;
+`
+
 const Header = () => {
   return (
     <Div>
@@ -61,7 +66,7 @@ const Header = () => {
           <Link href='/nftlist'>NFT lists</Link>
           <Link href='#'>Features</Link>
           <Link href='#'>Team</Link>
-          <Link href='#'>Sign in</Link>
+          <Button>Connect</Button>
         </Nav>
       </Container>
     </Div>
