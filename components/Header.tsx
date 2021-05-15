@@ -55,9 +55,20 @@ const Header = () => {
   const [account, setAccount] = React.useState(null)
 
   const connect = React.useCallback(() => {
-    const ethereum = (window as any)?.ethereum
     ;(async function() {
       try {
+        const ethereum = (window as any)?.ethereum
+        if (!ethereum) {
+          console.log('please install metamask first~')
+          return
+        }
+        // 请求权限
+        const permissions = await ethereum.request({
+          method: 'wallet_requestPermissions',
+          params: [{ eth_accounts: {} }]
+        })
+
+        // 获取用户信息
         const accounts = await ethereum.request({
           method: 'eth_requestAccounts'
         })
@@ -65,16 +76,47 @@ const Header = () => {
         if (account) {
           setAccount(account)
         }
-        const chainId = await ethereum.request({ method: 'eth_chainId' })
-        ethereum.on('chainChanged', _chainId => {
-          window.location.reload()
-        })
-      } catch (error) {}
+      } catch (error) {
+        console.log(error)
+      }
     })()
   }, [])
 
   React.useEffect(() => {
-    connect()
+    const ethereum = (window as any)?.ethereum
+    if (ethereum === undefined) return
+
+    const handleChainChange = chainId => {
+      // 若当前不是BSC，则请求切换到BSC
+      if (chainId !== '0x38') {
+        // 切换区块链网络
+        ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: '0x38',
+              chainName: 'Binance Smart Chain',
+              nativeCurrency: {
+                name: 'BNB',
+                symbol: 'BNB',
+                decimals: 18
+              },
+              rpcUrls: ['https://bsc-dataseed.binance.org/'],
+              blockExplorerUrls: ['https://bscscan.com/']
+            }
+          ]
+        })
+      }
+    }
+    ;(async function() {
+      const chainId = await ethereum.request({ method: 'eth_chainId' })
+      handleChainChange(chainId)
+
+      ethereum.on('chainChanged', _chainId => {
+        handleChainChange(_chainId)
+        window.location.reload()
+      })
+    })()
   }, [])
 
   return (
@@ -93,14 +135,14 @@ const Header = () => {
           <Link href='#'>Features</Link>
           <Link href='#'>Team</Link>
           {account ? (
+            <Button>{`${account?.slice(0, 4)}...${account?.slice(-4)}`}</Button>
+          ) : (
             <Button
               onClick={() => {
                 connect()
               }}>
-              {`${account?.slice(0, 4)}...${account?.slice(-4)}`}
+              Connect
             </Button>
-          ) : (
-            <Button>Connect</Button>
           )}
         </Nav>
       </Container>
