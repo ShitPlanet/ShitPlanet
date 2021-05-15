@@ -11,7 +11,6 @@ const Loading = () => {
 
   useEffect(() => {
     if (dom.current) {
-      console.log(dom.current)
       Lottie.loadAnimation({
         container: dom.current,
         renderer: 'svg',
