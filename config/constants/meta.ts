@@ -4,15 +4,10 @@ const { publicRuntimeConfig } = getConfig()
 export const blockchainList = {
   ETH: {
     kovan: {
-      chainId: '0x2a',
-      chainName: 'Kovan Test Network',
-      nativeCurrency: {
-        name: 'ETH',
-        symbol: 'ETH',
-        decimals: 18
-      },
       rpcUrls: ['https://kovan.infura.io'],
-      blockExplorerUrls: ['https://kovan.etherscan.io/']
+      chainId: '0x2a',
+      nickname: 'Kovan Test Network',
+      ticker: 'ETH'
     }
   },
   BSC: {
@@ -42,13 +37,10 @@ export const blockchainList = {
 }
 
 const blockchainMap = {
-  '0x2a': blockchainList.ETH.kovan
+  '0x2a': blockchainList.ETH.kovan,
+  '0x38': blockchainList.BSC.mainnet,
+  '0x61': blockchainList.BSC.testnet
 }
-
-console.log(
-  'publicRuntimeConfig.env.NEXT_PUBLIC_CHAIN_ID: ',
-  publicRuntimeConfig.env.NEXT_PUBLIC_CHAIN_ID
-)
 
 export const blockchain =
   blockchainMap[publicRuntimeConfig.env.NEXT_PUBLIC_CHAIN_ID]

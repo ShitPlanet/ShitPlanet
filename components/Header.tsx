@@ -139,30 +139,6 @@ const Header = () => {
     })()
   }, [])
 
-  React.useEffect(() => {
-    const ethereum = (window as any)?.ethereum
-    if (ethereum === undefined) return
-
-    const handleChainChange = chainId => {
-      if (chainId !== blockchain.chainId) {
-        // 切换区块链网络
-        ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [blockchain]
-        })
-      }
-    }
-    ;(async function() {
-      const chainId = await ethereum.request({ method: 'eth_chainId' })
-      handleChainChange(chainId)
-
-      ethereum.on('chainChanged', _chainId => {
-        handleChainChange(_chainId)
-        window.location.reload()
-      })
-    })()
-  }, [])
-
   return (
     <Div>
       <Container>
