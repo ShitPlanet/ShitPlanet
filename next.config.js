@@ -27,11 +27,9 @@ module.exports = withPlugins([
     }
   ],
   {
-    basePath: basePath ? `/${basePath}` : '',
-    assetPrefix: basePath ? `/${basePath}/` : '',
     publicRuntimeConfig: {
       env: {
-        BASEPATH: process.env.BASEPATH
+        NEXT_PUBLIC_CHAIN_ID: process.env.NEXT_PUBLIC_CHAIN_ID
       }
     }
   }

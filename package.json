@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "preinstall": "node -e \"if (process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('Use yarn for installing: https://yarnpkg.com/en/docs/install')\"",
-    "dev": "node server.js",
+    "dev": "next dev",
     "build": "next build",
-    "export": "next export",
-    "start": "next start"
+    "start": "next start",
+    "export": "next export"
   },
   "author": "",
   "license": "ISC",

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Image from 'next/image'
 import { useStore } from '@/store'
 import { notification } from 'antd'
+import { blockchain } from '@/config/constants/meta'
 
 const Div = styled.div`
   height: 6.25vw;
@@ -143,24 +144,11 @@ const Header = () => {
     if (ethereum === undefined) return
 
     const handleChainChange = chainId => {
-      // 若当前不是BSC，则请求切换到BSC
-      if (chainId !== '0x38') {
+      if (chainId !== blockchain.chainId) {
         // 切换区块链网络
         ethereum.request({
           method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: '0x38',
-              chainName: 'Binance Smart Chain',
-              nativeCurrency: {
-                name: 'BNB',
-                symbol: 'BNB',
-                decimals: 18
-              },
-              rpcUrls: ['https://bsc-dataseed.binance.org/'],
-              blockExplorerUrls: ['https://bscscan.com/']
-            }
-          ]
+          params: [blockchain]
         })
       }
     }
