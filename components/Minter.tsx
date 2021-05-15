@@ -112,21 +112,22 @@ const Minter = (props: IProps) => {
           provider
         )
         const shitTokenAddressList = await shitContract.getShitTokenList()
-        shitTokenAddressList.map(async address => {
-          const thirtyPartyShitContract = new ethers.Contract(
-            address,
-            template,
-            provider
-          )
-          const name = await thirtyPartyShitContract.name()
-          setShitTokenList([
-            ...shitTokenList,
-            {
+        const shitTokenList = await Promise.all(
+          shitTokenAddressList.map(async address => {
+            const thirtyPartyShitContract = new ethers.Contract(
+              address,
+              template,
+              provider
+            )
+            const name = await thirtyPartyShitContract.name()
+            return {
               name,
               address
             }
-          ])
-        })
+          })
+        )
+        setShitTokenList(shitTokenList)
+        setToken((shitTokenList[0] as any).address)
       } catch (error) {
       } finally {
       }
@@ -142,9 +143,10 @@ const Minter = (props: IProps) => {
       <Selector
         placeholder=''
         value={token}
-        options={Array(4)
-          .fill('1')
-          .map((i, index) => ({ label: 'BTC', value: index.toString() }))}
+        options={shitTokenList.map((token, index) => ({
+          label: token.name,
+          value: token.address
+        }))}
         onChange={val => setToken(val)}
       />
       <Price>Token Price: {price || '3.1100'}</Price>

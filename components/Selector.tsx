@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 
 const Div = styled.div`
   position: absolute;
@@ -78,6 +78,7 @@ const Selector = (props: IProps) => {
       }
     })
   }, [])
+
   useEffect(() => {
     if (props.value) {
       setSelected(
@@ -89,6 +90,11 @@ const Selector = (props: IProps) => {
       setSelected(null)
     }
   }, [props.value])
+
+  const calculatedOptions = useMemo(() => {
+    const index = props.options.findIndex(item => item.value === props.value)
+    return props.options.splice(index, 1)
+  }, [props.options, props.value])
 
   return (
     <Div ref={dom} className={show ? 'show' : ''}>
@@ -109,7 +115,7 @@ const Selector = (props: IProps) => {
         </svg>
       </button>
       <div className='options'>
-        {props.options.map((i, index) => (
+        {calculatedOptions.map((i, index) => (
           <button key={index} onClick={() => onClick(i.value)}>
             {i.label}
           </button>
