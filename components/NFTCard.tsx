@@ -101,32 +101,32 @@ const roll = keyframes`
 `
 const Power = styled.div`
   position: absolute;
-  display: flex;
-  align-item: center;
   width: ${(60 * 100) / 1440}vw;
   height: ${(60 * 100) / 1440}vw;
   color: #1384bc;
   top: ${(166 * 100) / 1440}vw;
   left: ${(32 * 100) / 1440}vw;
   text-align: center;
-  text-align: center;
   &.minting {
     color: #66ccff;
   }
+  & svg {
+    display: block;
+    width: 60%;
+    height: 60%;
+    margin: 0 auto;
+  }
   &.minting svg {
-    width: 100;
-    height: 100;
     transform: rotate(0);
     animation: ${roll} 2000ms linear infinite;
   }
   & span {
-    position: absolute;
+    display: block;
     width: 100%;
     left: 0;
     text-align: center;
-    font-family: 'IBMPlexSans bold';
-    font-size: 1.6vw;
-    line-height: ${(60 * 100) / 1440}vw;
+    font-family: 'IBMPlexSans';
+    font-size: 1vw;
     color: #fff;
   }
 `
@@ -160,7 +160,7 @@ const NFTCard = (props: IProps) => {
             fill='currentColor'
           />
         </svg>
-        <span>{props.power || '0'}</span>
+        <span>{props.power || '3.01 K'}</span>
       </Power>
       <NFTImage imgNo={props.imgNo} />
       <Footer>
