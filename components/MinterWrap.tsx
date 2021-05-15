@@ -39,6 +39,7 @@ const SubTitle = styled.div`
   cursor: default;
   opacity: 0;
   transition: opacity 300ms ease-out;
+  transition-delay: 0s;
   pointer-events: none;
 `
 const Card = styled.div`
@@ -98,7 +99,7 @@ const Wrap = styled.div`
     transform: scale(0) translateY(0);
   }
   &.active ${SubTitle} {
-    transition-delay: 300ms;
+    transition-delay: 500ms;
     opacity: 1;
   }
   &.active ${SubTitle}.hidden {
