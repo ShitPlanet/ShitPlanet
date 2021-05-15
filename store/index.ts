@@ -2,7 +2,12 @@ import { createStore } from './createSore'
 import { useLocalStore } from 'mobx-react-lite'
 
 export function useModel() {
-  return useLocalStore(() => ({}))
+  return useLocalStore(() => ({
+    account: null,
+    setAccount(value) {
+      this.account = value
+    }
+  }))
 }
 
 const store = createStore(useModel)

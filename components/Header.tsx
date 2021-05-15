@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
+import { useStore } from '@/store'
 
 const Div = styled.div`
   height: 6.25vw;
@@ -52,7 +53,7 @@ const Button = styled.button`
 `
 
 const Header = () => {
-  const [account, setAccount] = React.useState(null)
+  const store = useStore()
   const [disabled, setDisabled] = React.useState(false)
 
   const getAccount = React.useCallback(() => {
@@ -66,7 +67,7 @@ const Header = () => {
           method: 'eth_requestAccounts'
         })
         if (accounts[0]) {
-          setAccount(accounts[0])
+          store.setAccount(accounts[0])
         }
       } finally {
         setDisabled(false)
@@ -157,8 +158,10 @@ const Header = () => {
           <Link href='/nftlist'>NFT lists</Link>
           <Link href='#'>Features</Link>
           <Link href='#'>Team</Link>
-          {account ? (
-            <Button>{`${account?.slice(0, 4)}...${account?.slice(-4)}`}</Button>
+          {store.account ? (
+            <Button>{`${store.account?.slice(0, 4)}...${store.account?.slice(
+              -4
+            )}`}</Button>
           ) : (
             <Button
               disabled={disabled}
