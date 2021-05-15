@@ -2,11 +2,10 @@ import styled from 'styled-components'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faFacebookF,
+  faTelegramPlane,
   faTwitter,
-  faGithub
+  faDiscord
 } from '@fortawesome/free-brands-svg-icons'
-import { faPhoneAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 const Div = styled.div`
   width: 100%;
@@ -41,12 +40,16 @@ const Link = styled.a`
   border: 1px solid #fff;
   text-align: center;
   vertical-align: bottom;
+  color: #fff;
   &:first-child {
     margin-left: 0;
   }
   & svg {
     width: 1.4vw !important;
     height: 1.4vw;
+  }
+  &:hover {
+    color: #fff;
   }
 `
 const Divider = styled.div`
@@ -124,14 +127,14 @@ const Footer = () => {
             <Image src='/image/logo2.svg' layout='fill' />
           </Brand>
           <Links>
-            <Link href='#'>
-              <FontAwesomeIcon icon={faFacebookF} />
+            <Link href='https://t.me/joinchat/eIXOqWflKhgwZWU1' target='_blank'>
+              <FontAwesomeIcon icon={faTelegramPlane} />
             </Link>
-            <Link href='#'>
+            <Link href='https://twitter.com/shitplanetsaver' target='_blank'>
               <FontAwesomeIcon icon={faTwitter} />
             </Link>
-            <Link href='#'>
-              <FontAwesomeIcon icon={faGithub} />
+            <Link href='https://discord.gg/pfWmc6m2' target='_blank'>
+              <FontAwesomeIcon icon={faDiscord} />
             </Link>
           </Links>
         </Container1>
@@ -146,24 +149,24 @@ const Footer = () => {
           </Wrap1>
           <Wrap2>
             <div>
-              <Img>
+              {/* <Img>
                 <Image src='/image/icon-phone.svg' layout='fill' />
               </Img>
-              <span>(+86)183-3920-9433</span>
+              <span>(+86)183-3920-9433</span> */}
             </div>
             <div>
-              <Img>
+              {/* <Img>
                 <Image src='/image/icon-mail.svg' layout='fill' />
               </Img>
-              <span>Contact@shitplanet.world</span>
+              <span>Contact@shitplanet.world</span> */}
             </div>
           </Wrap2>
           <Wrap2>
             <div>
-              <Img>
+              {/* <Img>
                 <Image src='/image/icon-map-maker.svg' layout='fill' />
               </Img>
-              <span>(+86)183-3920-9433</span>
+              <span>(+86)183-3920-9433</span> */}
             </div>
           </Wrap2>
           <Wrap3>
