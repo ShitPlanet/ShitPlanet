@@ -5,7 +5,8 @@ const LevelDiv = styled.div`
   text-align: center;
   padding: 0 1.3vw;
   border-radius: 1.3vw;
-  font-family: 'OpenSans italic';
+  font-family: 'IBMPlexSans bold';
+  font-style: italic;
   font-weight: 900;
   font-size: 1.6vw;
   line-height: 2.6vw;

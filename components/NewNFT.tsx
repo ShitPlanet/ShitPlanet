@@ -78,7 +78,7 @@ const Header = styled.div`
   left: 0;
   justify-content: space-between;
   align-items: flex-start;
-  padding: ${(27 * 100) / 1440}vw ${(28 * 100) / 1440}vw ${(40 * 100) / 1440}vw
+  padding: ${(27 * 100) / 1440}vw ${(28 * 100) / 1440}vw ${(38 * 100) / 1440}vw
     ${(28 * 100) / 1440}vw;
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 `
@@ -102,32 +102,32 @@ const roll = keyframes`
 `
 const Power = styled.div`
   position: absolute;
-  display: flex;
-  align-item: center;
   width: ${(60 * 100) / 1440}vw;
   height: ${(60 * 100) / 1440}vw;
   color: #1384bc;
   top: ${(166 * 100) / 1440}vw;
   left: ${(32 * 100) / 1440}vw;
   text-align: center;
-  text-align: center;
   &.minting {
     color: #66ccff;
   }
+  & svg {
+    display: block;
+    width: 60%;
+    height: 60%;
+    margin: 0 auto;
+  }
   &.minting svg {
-    width: 100;
-    height: 100;
     transform: rotate(0);
     animation: ${roll} 2000ms linear infinite;
   }
   & span {
-    position: absolute;
+    display: block;
     width: 100%;
     left: 0;
     text-align: center;
-    font-family: 'IBMPlexSans bold';
-    font-size: 1.6vw;
-    line-height: ${(60 * 100) / 1440}vw;
+    font-family: 'IBMPlexSans';
+    font-size: 1vw;
     color: #fff;
   }
 `
