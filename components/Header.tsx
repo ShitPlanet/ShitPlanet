@@ -52,9 +52,12 @@ const Button = styled.button`
 `
 
 const Header = () => {
+  const ethereum = React.useMemo(() => (window as any)?.ethereum, [])
+
+  const [connected, setConnected] = React.useState(ethereum.isConnected())
+
   const connect = React.useCallback(() => {
     ;(async function() {
-      const ethereum = (window as any)?.ethereum
       const accounts = await ethereum.request({
         method: 'eth_requestAccounts'
       })
