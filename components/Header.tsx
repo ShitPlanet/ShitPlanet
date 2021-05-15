@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
+import { useStore } from '@/store'
+import { notification } from 'antd'
 
 const Div = styled.div`
   height: 6.25vw;
@@ -66,25 +68,111 @@ const Button = styled.button`
 `
 
 const Header = () => {
-  const [account, setAccount] = React.useState(null)
+  const store = useStore()
+  const [disabled, setDisabled] = React.useState(false)
 
-  const connect = React.useCallback(() => {
-    const ethereum = (window as any)?.ethereum
+  const getAccount = React.useCallback(() => {
     ;(async function() {
       try {
+        setDisabled(true)
+        const ethereum = (window as any)?.ethereum
+        if (!ethereum) {
+          return
+        }
+
+        // 获取用户信息
         const accounts = await ethereum.request({
           method: 'eth_requestAccounts'
         })
-        const account = accounts[0]
-        if (account) {
-          setAccount(account)
+        if (accounts[0]) {
+          store.setAccount(accounts[0])
         }
-      } catch (error) {}
+      } finally {
+        setDisabled(false)
+      }
     })()
   }, [])
 
   React.useEffect(() => {
-    connect()
+    getAccount()
+  }, [])
+
+  const connect = React.useCallback(() => {
+    ;(async function() {
+      try {
+        const ethereum = (window as any)?.ethereum
+        if (!ethereum) {
+          notification.warning({
+            message: 'Metamask is not installed',
+            description: (
+              <div>
+                Metamask is needed to make this Dapp function normally. (
+                <a
+                  target='_blank'
+                  href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US'>
+                  click to install
+                </a>
+                )
+              </div>
+            )
+          })
+
+          return
+        }
+        // 请求权限
+        const permissions = await ethereum.request({
+          method: 'wallet_requestPermissions',
+          params: [{ eth_accounts: {} }]
+        })
+
+        const accountsPermission = permissions.find(
+          permission => permission.parentCapability === 'eth_accounts'
+        )
+
+        if (accountsPermission) {
+          getAccount()
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  }, [])
+
+  React.useEffect(() => {
+    const ethereum = (window as any)?.ethereum
+    if (ethereum === undefined) return
+
+    const handleChainChange = chainId => {
+      // 若当前不是BSC，则请求切换到BSC
+      if (chainId !== '0x38') {
+        // 切换区块链网络
+        ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [
+            {
+              chainId: '0x38',
+              chainName: 'Binance Smart Chain',
+              nativeCurrency: {
+                name: 'BNB',
+                symbol: 'BNB',
+                decimals: 18
+              },
+              rpcUrls: ['https://bsc-dataseed.binance.org/'],
+              blockExplorerUrls: ['https://bscscan.com/']
+            }
+          ]
+        })
+      }
+    }
+    ;(async function() {
+      const chainId = await ethereum.request({ method: 'eth_chainId' })
+      handleChainChange(chainId)
+
+      ethereum.on('chainChanged', _chainId => {
+        handleChainChange(_chainId)
+        window.location.reload()
+      })
+    })()
   }, [])
 
   return (
@@ -102,16 +190,19 @@ const Header = () => {
           <Link href='/nftlist'>NFT list</Link>
           <Link href='#'>Features</Link>
           <Link href='#'>Team</Link>
-          {account ? (
+          {store.account ? (
+            <Button>{`${store.account?.slice(0, 4)}...${store.account?.slice(
+              -4
+            )}`}</Button>
+          ) : (
             <Button
               className='connected'
+              disabled={disabled}
               onClick={() => {
                 connect()
               }}>
-              {`${account?.slice(0, 4)}...${account?.slice(-4)}`}
+              Connect
             </Button>
-          ) : (
-            <Button>Connect</Button>
           )}
         </Nav>
       </Container>

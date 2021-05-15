@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import '@/global.css'
+import 'antd/dist/antd.css'
 import { observer } from 'mobx-react-lite'
 import { Provider } from '@/store'
 import Head from 'next/head'
