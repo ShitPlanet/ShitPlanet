@@ -1,6 +1,10 @@
+import { ethers } from 'ethers'
 import styled from 'styled-components'
 import Selector from './Selector'
-import { useState } from 'react'
+import { useState, useCallback, useEffect, useMemo } from 'react'
+import shitAbi from '@/config/abi/shit.json'
+import template from '@/config/abi/template.json'
+import address from '@/config/constants/address.json'
 
 const Div = styled.div`
   position: relative;
@@ -89,6 +93,46 @@ const Minter = (props: IProps) => {
   const [token, setToken] = useState('0')
   const [price, setPrice] = useState('')
   const [expect, setExpect] = useState('')
+
+  const [shitTokenList, setShitTokenList] = useState([])
+
+  const [disabled, setDisabled] = useState(false)
+
+  useEffect(() => {
+    ;(async function() {
+      try {
+        const ethereum = (window as any)?.ethereum
+        if (!ethereum) {
+          return
+        }
+        const provider = new ethers.providers.Web3Provider(ethereum)
+        const shitContract = new ethers.Contract(
+          address.shit,
+          shitAbi,
+          provider
+        )
+        const shitTokenAddressList = await shitContract.getShitTokenList()
+        shitTokenAddressList.map(async address => {
+          const thirtyPartyShitContract = new ethers.Contract(
+            address,
+            template,
+            provider
+          )
+          const name = await thirtyPartyShitContract.name()
+          setShitTokenList([
+            ...shitTokenList,
+            {
+              name,
+              address
+            }
+          ])
+        })
+      } catch (error) {
+      } finally {
+      }
+    })()
+  }, [])
+
   return (
     <Div>
       <InputGroup>

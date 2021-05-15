@@ -139,6 +139,16 @@ const Header = () => {
     })()
   }, [])
 
+  React.useEffect(() => {
+    const ethereum = (window as any)?.ethereum
+    if (ethereum === undefined) return
+    ;(async function() {
+      ethereum.on('chainChanged', _chainId => {
+        window.location.reload()
+      })
+    })()
+  }, [])
+
   return (
     <Div>
       <Container>
