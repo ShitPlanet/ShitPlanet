@@ -74,7 +74,7 @@ const Expect = styled.div`
 `
 const Button = styled.button`
   float: right;
-  margin-top: ${(40 * 100) / 1440}vw;
+  margin-top: ${(160 * 100) / 1440}vw;
   width: ${(300 * 100) / 1440}vw;
   height: ${(80 * 100) / 1440}vw;
   border: none;
@@ -251,8 +251,6 @@ const Minter = observer((props: IProps) => {
         }))}
         onChange={val => state.setToken(val)}
       />
-      <Price>Token Price: {price || '3.1100'}</Price>
-      <Expect>Expected Mint: {expect || '13.5554'}</Expect>
       <Button
         disabled={state.disabled}
         onClick={() => {
