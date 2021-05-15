@@ -162,8 +162,7 @@ const Header = () => {
         </Brand>
         <Nav>
           <Link href='/nftlist'>NFT list</Link>
-          <Link href='#'>Features</Link>
-          <Link href='#'>Team</Link>
+          <Link href='/mining'>Mining</Link>
           {store.account ? (
             <Button className='connected'>{`${store.account?.slice(
               0,

@@ -3,9 +3,11 @@ import Footer from './Footer'
 import styled from 'styled-components'
 import Image from 'next/image'
 import Background from './Background'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MinterWrap from './MinterWrap'
 import VideoPlayer from './VideoPlayer'
+import { useStore } from '@/store'
+import Leading from './Leading'
 
 const Div = styled.div`
   &.blur {
@@ -24,6 +26,7 @@ const SubTitle = styled.div`
   font-weight: bold;
   font-size: 3.2vw;
   color: #fff;
+  line-height: 1;
   margin-bottom: 0.6vw;
   cursor: default;
   transition: opacity 300ms 300ms ease-out;
@@ -56,14 +59,13 @@ const Container = styled.div`
 const Title = styled.div`
   font-family: 'Bungee';
   font-size: 6.4vw;
-  line-height: 5vw;
+  line-height: 1;
   background-image: linear-gradient(140deg, #5a6cd8, #53bbf8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   cursor: default;
   opacity: 0;
 `
-
 const Button = styled.button`
   width: 15vw;
   height: 3.5vw;
@@ -108,6 +110,13 @@ const Img = styled.div`
 const Landing = () => {
   const [phase, setPhase] = useState(1)
   const [playVideo, setPlayVideo] = useState(false)
+  // const [leadingInfo, setLeadingInfo] = useState('0')
+
+  // useEffect(() => {
+  //   const info = JSON.parse(localStorage.getItem('shitplanet'))
+  //   setLeadingInfo(info ? info : '0')
+  // }, [])
+
   return (
     <div>
       <Div className={playVideo ? 'blur' : ''}>
@@ -118,7 +127,9 @@ const Landing = () => {
             <SubTitle>Blackhole for Shit Tokens</SubTitle>
             <Title>SHITPLANET</Title>
             <Description>- Revolutionary NFT Tool For Everyone -</Description>
-            <Button onClick={() => setPhase(phase === 1 ? 2 : 1)}>
+            <Button
+              id='leading_target_1'
+              onClick={() => setPhase(phase === 1 ? 2 : 1)}>
               <Icon>
                 <Image src='/image/icon-planet.svg' layout='fill' />
               </Icon>
@@ -133,6 +144,9 @@ const Landing = () => {
         <Footer />
       </Div>
       {playVideo ? <VideoPlayer /> : null}
+      {/* {leadingInfo === '0' ? (
+        <Leading skip={() => setLeadingInfo('1')} />
+      ) : null} */}
     </div>
   )
 }

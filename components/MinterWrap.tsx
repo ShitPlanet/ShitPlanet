@@ -23,7 +23,7 @@ const Title = styled.div`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   cursor: default;
-  transform: scale(1) translateY(18.8vw);
+  transform: scale(1) translateY(18.2vw);
   transition: opacity 600ms ease-out, transform 400ms 200ms ease-out;
   opacity: 1;
   pointer-events: none;

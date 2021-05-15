@@ -90,6 +90,31 @@ const Wrap = styled.div`
     left: 79vw;
     bottom: -0.6vw;
   }
+  &.phase_4 ${Img1} {
+    width: ${(226 * 100) / 1440}vw;
+    height: ${(257 * 100) / 1440}vw;
+    top: ${(195 * 100) / 1440}vw;
+    left: ${(48 * 100) / 1440}vw;
+    transform: rotate(-11.88deg);
+  }
+  &.phase_4 ${Img3} {
+    width: ${(73 * 100) / 1440}vw;
+    height: ${(73 * 100) / 1440}vw;
+    top: ${(31 * 100) / 1440}vw;
+    left: ${(1323 * 100) / 1440}vw;
+  }
+  &.phase_4 ${Img4} {
+    width: ${(102 * 100) / 1440}vw;
+    height: ${(44 * 100) / 1440}vw;
+    top: ${(524 * 100) / 1440}vw;
+    left: ${(280 * 100) / 1440}vw;
+  }
+  &.phase_4 ${Img5} {
+    width: ${(572 * 100) / 1440}vw;
+    height: ${(212 * 100) / 1440}vw;
+    top: ${(515 * 100) / 1440}vw;
+    left: ${(745 * 100) / 1440}vw;
+  }
 `
 
 interface IProps {

@@ -98,7 +98,9 @@ const Selector = (props: IProps) => {
 
   return (
     <Div ref={dom} className={show ? 'show' : ''}>
-      <button className='select' onClick={() => setShow(!show)}>
+      <button
+        className='select leading_target_2'
+        onClick={() => setShow(!show)}>
         {selected ? selected.label : props.placeholder}
         <svg
           width='20'
