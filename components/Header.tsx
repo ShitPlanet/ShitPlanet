@@ -52,16 +52,20 @@ const Button = styled.button`
 `
 
 const Header = () => {
-  const ethereum = React.useMemo(() => (window as any)?.ethereum, [])
-
-  const [connected, setConnected] = React.useState(ethereum.isConnected())
+  const [connected, setConnected] = React.useState(false)
+  const [account, setAccount] = React.useState(null)
 
   const connect = React.useCallback(() => {
+    const ethereum = (window as any)?.ethereum
     ;(async function() {
       const accounts = await ethereum.request({
         method: 'eth_requestAccounts'
       })
       const account = accounts[0]
+      if (account) {
+        setConnected(true)
+        setAccount(account)
+      }
       console.log(account)
     })()
   }, [])
@@ -85,7 +89,7 @@ const Header = () => {
             onClick={() => {
               connect()
             }}>
-            Connect
+            {connected ? account : 'Connect'}
           </Button>
         </Nav>
       </Container>
