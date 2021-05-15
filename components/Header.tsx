@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 
@@ -51,6 +52,17 @@ const Button = styled.button`
 `
 
 const Header = () => {
+  const connect = React.useCallback(() => {
+    ;(async function() {
+      const ethereum = (window as any)?.ethereum
+      const accounts = await ethereum.request({
+        method: 'eth_requestAccounts'
+      })
+      const account = accounts[0]
+      console.log(account)
+    })()
+  }, [])
+
   return (
     <Div>
       <Container>
@@ -66,7 +78,12 @@ const Header = () => {
           <Link href='/nftlist'>NFT lists</Link>
           <Link href='#'>Features</Link>
           <Link href='#'>Team</Link>
-          <Button>Connect</Button>
+          <Button
+            onClick={() => {
+              connect()
+            }}>
+            Connect
+          </Button>
         </Nav>
       </Container>
     </Div>
