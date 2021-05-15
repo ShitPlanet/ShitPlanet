@@ -111,7 +111,8 @@ const Minter = observer((props: IProps) => {
     mintValue: '',
     setMintValue(value) {
       this.mintValue = value
-    }
+    },
+    allowance: ethers.BigNumber.from(0)
   }))
 
   const [shitTokenList, setShitTokenList] = useState([])
@@ -136,7 +137,7 @@ const Minter = observer((props: IProps) => {
         )
         setShitTokenList(shitTokenList)
         if (shitTokenList[0]) {
-          state.token = (shitTokenList[0] as any).address
+          state.setToken((shitTokenList[0] as any).address)
         }
       } catch (error) {
       } finally {
@@ -144,11 +145,10 @@ const Minter = observer((props: IProps) => {
     })()
   }, [store.shitContract, store.provider, store.account])
 
-  // 选中的laji币切换时，重新设置lajiContract、approve状态
+  // 选中的laji币切换时，重新设置lajiContract、approve、上限状态
   useEffect(() => {
     ;(async function() {
       try {
-        state.setToken(state.token)
         state.lajiContract = new ethers.Contract(
           state.token,
           shitAbi,
@@ -158,6 +158,7 @@ const Minter = observer((props: IProps) => {
           store.account,
           '0x0E31f19aF16103162401345Af527017F2ef62F59'
         )
+        state.allowance = allowance
         state.approved = allowance.gt(0)
       } catch (error) {
         console.log(error)
@@ -212,7 +213,15 @@ const Minter = observer((props: IProps) => {
           type='number'
           placeholder='Destroyed Quantity'
         />
-        <button>MAX</button>
+        <button
+          onClick={() => {
+            const max = state.allowance
+              .div(ethers.BigNumber.from('1000000000000000000'))
+              .toNumber()
+            state.setMintValue(max)
+          }}>
+          MAX
+        </button>
       </InputGroup>
       <Selector
         placeholder=''
