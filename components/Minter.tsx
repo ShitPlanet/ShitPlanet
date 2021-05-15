@@ -1,10 +1,13 @@
+import { useLocalStore, observer } from 'mobx-react-lite'
 import { ethers } from 'ethers'
 import styled from 'styled-components'
 import Selector from './Selector'
 import { useState, useCallback, useEffect, useMemo } from 'react'
 import shitAbi from '@/config/abi/shit.json'
+import shitboxAbi from '@/config/abi/shitbox.json'
 import template from '@/config/abi/template.json'
 import address from '@/config/constants/address.json'
+import { useStore } from '@/store'
 
 const Div = styled.div`
   position: relative;
@@ -89,14 +92,35 @@ interface IProps {
   setLoading: (val: boolean) => void
   setNewlyMinted: (val: { level: number }) => void
 }
-const Minter = (props: IProps) => {
-  const [token, setToken] = useState('0')
+
+const Minter = observer((props: IProps) => {
+  const store = useStore()
+
+  const state = useLocalStore(() => ({
+    shitContract: null,
+    shitboxContract: null,
+    lajiContract: null,
+    provider: null,
+    signer: null,
+    disabled: false,
+    setDisabled(value) {
+      this.disabled = value
+    },
+    approved: false,
+    token: null,
+    setToken(value: string) {
+      this.token = value
+    },
+    mintValue: '',
+    setMintValue(value) {
+      this.mintValue = value
+    }
+  }))
+
   const [price, setPrice] = useState('')
   const [expect, setExpect] = useState('')
 
   const [shitTokenList, setShitTokenList] = useState([])
-
-  const [disabled, setDisabled] = useState(false)
 
   useEffect(() => {
     ;(async function() {
@@ -105,19 +129,32 @@ const Minter = (props: IProps) => {
         if (!ethereum) {
           return
         }
-        const provider = new ethers.providers.Web3Provider(ethereum)
-        const shitContract = new ethers.Contract(
+        state.provider = new ethers.providers.Web3Provider(ethereum)
+        state.signer = state.provider.getSigner()
+        state.shitContract = new ethers.Contract(
           address.shit,
           shitAbi,
-          provider
+          state.signer
         )
-        const shitTokenAddressList = await shitContract.getShitTokenList()
+        state.shitboxContract = new ethers.Contract(
+          address.shitbox,
+          shitboxAbi,
+          state.signer
+        )
+      } catch (error) {}
+    })()
+  }, [])
+
+  useEffect(() => {
+    ;(async function() {
+      try {
+        const shitTokenAddressList = await state.shitContract.getShitTokenList()
         const shitTokenList = await Promise.all(
           shitTokenAddressList.map(async address => {
             const thirtyPartyShitContract = new ethers.Contract(
               address,
               template,
-              provider
+              state.provider
             )
             const name = await thirtyPartyShitContract.name()
             return {
@@ -127,37 +164,103 @@ const Minter = (props: IProps) => {
           })
         )
         setShitTokenList(shitTokenList)
-        setToken((shitTokenList[0] as any).address)
+        if (shitTokenList[0]) {
+          state.token = (shitTokenList[0] as any).address
+        }
       } catch (error) {
       } finally {
       }
     })()
-  }, [])
+  }, [state.shitContract, state.provider, store.account])
+
+  // 选中的laji币切换时，重新设置lajiContract、approve状态
+  useEffect(() => {
+    ;(async function() {
+      try {
+        state.setToken(state.token)
+        state.lajiContract = new ethers.Contract(
+          state.token,
+          shitAbi,
+          state.signer
+        )
+        const allowance = await state.lajiContract.allowance(
+          store.account,
+          '0x0E31f19aF16103162401345Af527017F2ef62F59'
+        )
+        state.approved = allowance.gt(0)
+      } catch (error) {
+        console.log(error)
+      } finally {
+      }
+    })()
+  }, [state.token])
+
+  const approve = useCallback(async () => {
+    try {
+      props.setLoading(true)
+      const tx = await state.lajiContract.approve(
+        '0x0E31f19aF16103162401345Af527017F2ef62F59',
+        ethers.BigNumber.from('1000000000000000000000000')
+      )
+
+      await tx.wait()
+      state.approved = true
+    } catch (error) {
+      console.log(error)
+    } finally {
+      props.setLoading(false)
+    }
+  }, [state.shitContract])
+
+  const mint = useCallback(async () => {
+    try {
+      props.setLoading(true)
+      const tx = await state.shitboxContract.mintShitBox(
+        state.token,
+        ethers.BigNumber.from(state.mintValue).mul(
+          ethers.BigNumber.from('1000000000000000000')
+        )
+      )
+      await tx.wait()
+    } catch (error) {
+      console.log(error)
+    } finally {
+      props.setLoading(false)
+    }
+  }, [state.shitContract])
 
   return (
     <Div>
       <InputGroup>
-        <input type='text' placeholder='Destroyed Quantity' />
+        <input
+          value={state.mintValue}
+          onChange={e => {
+            state.setMintValue(e.target.value)
+          }}
+          type='number'
+          placeholder='Destroyed Quantity'
+        />
         <button>MAX</button>
       </InputGroup>
       <Selector
         placeholder=''
-        value={token}
+        value={state.token}
         options={shitTokenList.map((token, index) => ({
           label: token.name,
           value: token.address
         }))}
-        onChange={val => setToken(val)}
+        onChange={val => state.setToken(val)}
       />
       <Price>Token Price: {price || '3.1100'}</Price>
       <Expect>Expected Mint: {expect || '13.5554'}</Expect>
       <Button
+        disabled={state.disabled}
         onClick={() => {
-          props.setLoading(true)
-          setTimeout(() => {
-            props.setLoading(false)
-            props.setNewlyMinted({ level: 1 })
-          }, 2000)
+          if (!state.approved) {
+            approve()
+          } else {
+            mint()
+          }
         }}>
         <svg
           width='30'
@@ -172,10 +275,9 @@ const Minter = (props: IProps) => {
             fill='white'
           />
         </svg>
-        Mint NFT
+        {state.approved ? 'Mint NFT' : 'Approve'}
       </Button>
     </Div>
   )
-}
-
+})
 export default Minter
