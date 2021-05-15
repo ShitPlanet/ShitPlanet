@@ -6,7 +6,6 @@ import Background from './Background'
 import { useEffect, useState } from 'react'
 import MinterWrap from './MinterWrap'
 import VideoPlayer from './VideoPlayer'
-import { useStore } from '@/store'
 import Leading from './Leading'
 
 const Div = styled.div`
@@ -110,16 +109,21 @@ const Img = styled.div`
 const Landing = () => {
   const [phase, setPhase] = useState(1)
   const [playVideo, setPlayVideo] = useState(false)
-  // const [leadingInfo, setLeadingInfo] = useState('0')
+  const [leadingInfo, setLeadingInfo] = useState('0')
 
-  // useEffect(() => {
-  //   const info = JSON.parse(localStorage.getItem('shitplanet'))
-  //   setLeadingInfo(info ? info : '0')
-  // }, [])
+  useEffect(() => {
+    const info = JSON.parse(localStorage.getItem('shitplanet'))
+    setLeadingInfo(info ? info : '0')
+  }, [])
+  useEffect(() => {
+    if (leadingInfo === '1') {
+      localStorage.setItem('shitplanet', '1')
+    }
+  }, [leadingInfo])
 
   return (
     <div>
-      <Div className={playVideo ? 'blur' : ''}>
+      <Div className={playVideo || !leadingInfo ? 'blur' : ''}>
         <Header />
         <Main>
           <Background phase={phase} />

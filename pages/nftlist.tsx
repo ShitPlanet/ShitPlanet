@@ -43,10 +43,12 @@ const LoadingWrap = styled.div`
   margin: 0 auto;
 `
 const Wrap = styled.div`
+  box-sizing: border-box;
   position: relative;
   display: inline-block;
-  width: 28.8vw;
+  width: 26.5vw;
   height: 48vw;
+  margin: 0 1.3vw 3vw 1.3vw;
   cursor: pointer;
 `
 const Modal = styled.div`
@@ -67,7 +69,6 @@ const Btn = styled.div`
   position: absolute;
   display: flex;
   width: 26.5vw;
-  margin: 0 1.3vw;
   justify-content: space-between;
   top: calc(50% + 22vw);
   left: 50%;

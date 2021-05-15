@@ -7,8 +7,6 @@ const Div = styled.div`
   display: inline-block;
   width: 26.5vw;
   height: 45vw;
-  margin: 0 1.3vw 3vw 1.3vw;
-
   border-radius: 1.3vw;
   background: linear-gradient(225deg, #326aa6 0%, #2b366c 100%);
 `
