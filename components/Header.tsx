@@ -46,8 +46,23 @@ const Link = styled.a`
   }
 `
 const Button = styled.button`
-  margin-left: 2.8vw;
+  width: ${(90 * 100) / 1440}vw;
+  height: ${(35 * 100) / 1440}vw;
+  margin-left: ${(40 * 100) / 1440}vw;
+  border: none;
+  border-radius: ${(35 * 100) / 1440}vw;
+  background-color: transparent;
+  background: linear-gradient(90deg, #34a0ff 0%, #18d8d5 100%);
+  font-family: Impact;
   font-size: 1.3vw;
+  color: #fff;
+  &:hover {
+    box-shadow: 0 0 0.5vw #18d8d5;
+  }
+  &.connected {
+    cursor: default;
+    width: ${(120 * 100) / 1440}vw;
+  }
 `
 
 const Header = () => {
@@ -84,11 +99,12 @@ const Header = () => {
           </Name>
         </Brand>
         <Nav>
-          <Link href='/nftlist'>NFT lists</Link>
+          <Link href='/nftlist'>NFT list</Link>
           <Link href='#'>Features</Link>
           <Link href='#'>Team</Link>
           {account ? (
             <Button
+              className='connected'
               onClick={() => {
                 connect()
               }}>

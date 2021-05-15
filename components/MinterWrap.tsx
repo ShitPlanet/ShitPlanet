@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import Loading from './Loading'
 import Minter from './Minter'
+import NewNFT from './NewNFT'
 
 const zoomIn = keyframes`
 0% {
@@ -20,8 +22,10 @@ const Title = styled.div`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   cursor: default;
-  transform: translateY(11.3vw);
-  transition: transform 400ms 200ms ease-out;
+  transform: scale(1) translateY(11.3vw);
+  transition: opacity 600ms ease-out, transform 400ms 200ms ease-out;
+  opacity: 1;
+  pointer-events: none;
 `
 const SubTitle = styled.div`
   font-family: 'OpenSans italic';
@@ -33,15 +37,23 @@ const SubTitle = styled.div`
   cursor: default;
   opacity: 0;
   transition: opacity 300ms ease-out;
+  pointer-events: none;
 `
 const Card = styled.div`
+  box-sizing: border-box;
   position: relative;
   width: 100%;
-  height: 20.5vw;
+  height: 26.2vw;
   background: linear-gradient(225deg, #326aa6 0%, #2b366c 100%);
   border-radius: 1.3vw;
   opacity: 0;
+  padding: 3.5vw 5vw;
   transform: scale(0.2);
+  transition: width 600ms ease-out;
+  margin: 0 auto;
+  &.loading {
+    width: 41.6vw;
+  }
 `
 const Button = styled.button`
   position: absolute;
@@ -53,6 +65,7 @@ const Button = styled.button`
   border: none;
   background-color: transparent;
   padding: 0;
+  text-align: left;
 `
 const Wrap = styled.div`
   position: absolute;
@@ -61,23 +74,35 @@ const Wrap = styled.div`
   left: 14.5vw;
   text-align: center;
   margin: 6.25vw auto;
-
   pointer-events: none;
   transform-origin: center;
   transition: opacity 400ms 200ms ease-out;
   &.active {
     opacity: 1;
+    pointer-events: all;
   }
   &.active ${Card} {
     pointer-events: all;
     animation: ${zoomIn} 400ms 200ms ease-out forwards;
   }
   &.active ${Title} {
-    transform: translateY(0);
+    transform: scale(1) translateY(0);
+  }
+  &.active ${Title}.hidden {
+    transition: opacity 600ms ease-out, transform 1000ms ease-out;
+    transition-delay: 0s;
+    opacity: 0;
+    transform: scale(0) translateY(0);
   }
   &.active ${SubTitle} {
     transition-delay: 300ms;
     opacity: 1;
+  }
+  &.active ${SubTitle}.hidden {
+    transition: opacity 600ms ease-out, transform 600ms ease-out;
+    transition-delay: 0s;
+    opacity: 0;
+    transform: scale(0);
   }
 `
 const LoadingWrap = styled.div`
@@ -94,17 +119,33 @@ interface IProps {
   cancel: () => void
 }
 const MinterWrap = (props: IProps) => {
+  const [loading, setLoading] = useState(false)
+  const [newlyMinted, setNewlyMinted] = useState<null | { level: number }>(null)
   return (
     <Wrap className={props.phase === 2 ? 'active' : ''}>
-      <Title>{props.phase === 1 ? 'SHITPLANET' : 'THE MINTER'}</Title>
-      <SubTitle>Blackhole for Shit Tokens</SubTitle>
-      <Card>
-        {/* <Minter /> */}
-        <Button onClick={props.cancel}>Back</Button>
-        <LoadingWrap>
-          <Loading />
-        </LoadingWrap>
-      </Card>
+      <Title className={newlyMinted ? 'hidden' : ''}>
+        {props.phase === 1 ? 'SHITPLANET' : 'THE MINTER'}
+      </Title>
+      <SubTitle className={newlyMinted ? 'hidden' : ''}>
+        Blackhole for Shit Tokens
+      </SubTitle>
+      {newlyMinted ? null : (
+        <Card className={loading ? 'loading' : ''}>
+          {loading ? null : (
+            <Minter
+              setLoading={val => setLoading(val)}
+              setNewlyMinted={val => setNewlyMinted(val)}
+            />
+          )}
+          {loading ? null : <Button onClick={props.cancel}>Back</Button>}
+          {loading ? (
+            <LoadingWrap>
+              <Loading />
+            </LoadingWrap>
+          ) : null}
+        </Card>
+      )}
+      {newlyMinted ? <NewNFT one={newlyMinted} /> : null}
     </Wrap>
   )
 }

@@ -72,6 +72,7 @@ const Wrap = styled.div`
   height: 100%;
   background: linear-gradient(180deg, #25223f 0%, #203459 50.53%, #202a4f 100%);
   z-index: -10;
+  pointer-events: none;
   &.phase_2 ${Img1} {
     left: 78.5vw;
     top: 3.5vw;

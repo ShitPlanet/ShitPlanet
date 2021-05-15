@@ -10,14 +10,17 @@ const Loading = () => {
   const dom = useRef<HTMLDivElement>()
 
   useEffect(() => {
-    const val = Lottie.loadAnimation({
-      container: dom.current,
-      renderer: 'svg',
-      loop: true,
-      autoplay: true,
-      path: '/loading_hole.json'
-    })
-  }, [])
+    if (dom.current) {
+      console.log(dom.current)
+      Lottie.loadAnimation({
+        container: dom.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '/loading_hole.json'
+      })
+    }
+  }, [dom])
   return <Div ref={dom}></Div>
 }
 

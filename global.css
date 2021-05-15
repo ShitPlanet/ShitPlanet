@@ -302,7 +302,5 @@ html {
 }
 
 .test {
-  width: 18.5vw;
-  height: 20.7vw;
-  transform: rotate(8deg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }

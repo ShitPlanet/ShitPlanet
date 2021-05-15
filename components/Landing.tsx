@@ -12,7 +12,6 @@ const Main = styled.div`
   height: 71.6vw;
   overflow: hidden;
 `
-
 const SubTitle = styled.div`
   font-family: 'OpenSans italic';
   font-style: italic;
@@ -44,6 +43,7 @@ const Container = styled.div`
   &.hidden,
   &.hidden ${SubTitle}, &.hidden ${Description} {
     opacity: 0;
+    pointer-events: none;
   }
 `
 const Title = styled.div`

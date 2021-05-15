@@ -1,5 +1,6 @@
-import styled from 'styled-components'
-import Image from 'next/image'
+import styled, { keyframes } from 'styled-components'
+import Level from './Level'
+import NFTImage from './NFTImage'
 
 const Div = styled.div`
   position: relative;
@@ -89,6 +90,45 @@ const Time = styled.div`
     padding-left: 1.4vw;
   }
 `
+const roll = keyframes`
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`
+const Power = styled.div`
+  position: absolute;
+  display: flex;
+  align-item: center;
+  width: ${(60 * 100) / 1440}vw;
+  height: ${(60 * 100) / 1440}vw;
+  color: #1384bc;
+  top: ${(166 * 100) / 1440}vw;
+  left: ${(32 * 100) / 1440}vw;
+  text-align: center;
+  text-align: center;
+  &.minting {
+    color: #66ccff;
+  }
+  &.minting svg {
+    width: 100;
+    height: 100;
+    transform: rotate(0);
+    animation: ${roll} 2000ms linear infinite;
+  }
+  & span {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    font-family: 'IBMPlexSans bold';
+    font-size: 1.6vw;
+    line-height: ${(60 * 100) / 1440}vw;
+    color: #fff;
+  }
+`
 
 interface IProps {
   type?: string
@@ -97,6 +137,8 @@ interface IProps {
   amount?: number
   timestampt?: number
   usd?: number
+  power?: number
+  minting?: boolean
 }
 const NFTCard = (props: IProps) => {
   return (
@@ -108,7 +150,18 @@ const NFTCard = (props: IProps) => {
         </Text>
         <Level level={1} />
       </Header>
-      <ImageCard imgNo={props.imgNo} />
+      <Power className={props.minting ? 'minting' : ''}>
+        <svg viewBox='0 0 60 59' fill='none' xmlns='http://www.w3.org/2000/svg'>
+          <path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M50.705 16.4684C47.4512 3.97228 32.3536 -2.40551 19.7939 0.837436C30.3254 2.0103 36.8764 5.73428 40.0813 11.8905C37.1165 8.63267 33.2835 6.28205 29.0293 5.11272C16.5456 1.66979 3.45445 11.5175 0 23.9596C6.8872 14.647 14.051 10.9879 21.7625 12.1877C20.6057 12.3436 19.462 12.5839 18.3406 12.9066C14.0857 14.2056 10.2936 16.6928 7.41323 20.0735C-0.997831 29.8888 2.4295 45.8765 12.2939 54.2596C7.84707 46.1522 6.7679 39.369 8.74729 33.6831C8.35708 36.6415 8.54119 39.6471 9.28959 42.5363C12.5434 55.0325 27.6464 61.4049 40.2006 58.1673C29.6909 56.9944 23.1453 53.2705 19.9349 47.1305C22.901 50.3754 26.7265 52.7192 30.9707 53.892C43.4436 57.335 56.5456 47.4872 60 35.0451C53.1128 44.3578 45.9436 48.0169 38.2321 46.8116C39.391 46.658 40.5367 46.4177 41.6594 46.0927C45.9205 44.7916 49.7183 42.3007 52.603 38.915C61.0033 29.0943 57.5813 13.1066 47.7223 4.72897C52.1746 12.8634 53.2484 19.6249 51.269 25.3109C51.6622 22.3507 51.4781 19.3428 50.7267 16.4522L50.705 16.4684Z'
+            fill='currentColor'
+          />
+        </svg>
+        <span>{props.power || '0'}</span>
+      </Power>
+      <NFTImage imgNo={props.imgNo} />
       <Footer>
         <Amount>
           <span className='label'>Burn Amount:</span>
@@ -125,100 +178,3 @@ const NFTCard = (props: IProps) => {
 }
 
 export default NFTCard
-
-const LevelDiv = styled.div`
-  height: 2.6vw;
-  text-align: center;
-  padding: 0 1.3vw;
-  border-radius: 1.3vw;
-  font-family: 'OpenSans italic';
-  font-weight: 900;
-  font-size: 1.6vw;
-  line-height: 2.6vw;
-  color: #fff;
-  margin-top: 0.5vw;
-  &.level_1 {
-    background: linear-gradient(90deg, #429321 0%, #a8d037 100%);
-  }
-  &.level_2 {
-    background: linear-gradient(90deg, #3c92dd 0%, #34c4c2 100%);
-  }
-  &.level_3 {
-    background: linear-gradient(90deg, #fe78ad 0%, #eaa85e 100%);
-  }
-`
-interface LevelProps {
-  level: number
-}
-const Level = (props: LevelProps) => {
-  return (
-    <LevelDiv className={`level_${props.level}`}>
-      {props.level === 1 ? <span>UNIQUE</span> : null}
-      {props.level === 2 ? <span>EPIC</span> : null}
-      {props.level === 3 ? <span>LEGEND</span> : null}
-    </LevelDiv>
-  )
-}
-
-const ImageDiv = styled.div`
-  position: absolute;
-  &.no_1 {
-    width: ${(266 * 100) / 1440}vw;
-    height: ${(299 * 100) / 1440}vw;
-    top: 8.1vw;
-    right: 1.5vw;
-    transform: rotate(8deg);
-  }
-  &.no_2 {
-    width: ${(235 * 100) / 1440}vw;
-    height: ${(277 * 100) / 1440}vw;
-    top: 8.9vw;
-    right: 3.6vw;
-  }
-  &.no_3 {
-    width: ${(254 * 100) / 1440}vw;
-    height: ${(330 * 100) / 1440}vw;
-    top: ${(114 * 100) / 1440}vw;
-    right: ${(48 * 100) / 1440}vw;
-  }
-  &.no_4 {
-    width: ${(276 * 100) / 1440}vw;
-    height: ${(348 * 100) / 1440}vw;
-    top: ${(93 * 100) / 1440}vw;
-    right: ${(13 * 100) / 1440}vw;
-  }
-  &.no_5 {
-    width: ${(256 * 100 * 1) / 1440}vw;
-    height: ${(290 * 100 * 1) / 1440}vw;
-    top: ${(125 * 100) / 1440}vw;
-    right: ${(38 * 100) / 1440}vw;
-    transform: rotate(12.07deg);
-  }
-  &.no_6 {
-    width: ${(250 * 100) / 1440}vw;
-    height: ${(241 * 100) / 1440}vw;
-    top: ${(161 * 100) / 1440}vw;
-    right: ${(53 * 100) / 1440}vw;
-  }
-`
-interface ImageProps {
-  imgNo: number
-}
-const ImageCard = (props: ImageProps) => {
-  return (
-    <ImageDiv className={`no_${props.imgNo}`}>
-      {props.imgNo === 1 ? <Image src='/image/ufo.svg' layout='fill' /> : null}
-      {props.imgNo === 2 ? (
-        <Image src='/image/skull.svg' layout='fill' />
-      ) : null}
-      {props.imgNo === 3 ? <Image src='/image/gun.svg' layout='fill' /> : null}
-      {props.imgNo === 4 ? (
-        <Image src='/image/bottle.svg' layout='fill' />
-      ) : null}
-      {props.imgNo === 5 ? (
-        <Image src='/image/aircraft.svg' layout='fill' />
-      ) : null}
-      {props.imgNo === 6 ? <Image src='/image/shit.svg' layout='fill' /> : null}
-    </ImageDiv>
-  )
-}
