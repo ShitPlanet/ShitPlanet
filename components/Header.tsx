@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 import { useStore } from '@/store'
+import { notification } from 'antd'
 
 const Div = styled.div`
   height: 6.25vw;
@@ -61,6 +62,9 @@ const Header = () => {
       try {
         setDisabled(true)
         const ethereum = (window as any)?.ethereum
+        if (!ethereum) {
+          return
+        }
 
         // 获取用户信息
         const accounts = await ethereum.request({
@@ -84,7 +88,21 @@ const Header = () => {
       try {
         const ethereum = (window as any)?.ethereum
         if (!ethereum) {
-          console.log('please install metamask first~')
+          notification.warning({
+            message: 'Metamask is not installed',
+            description: (
+              <div>
+                Metamask is needed to make this Dapp function normally. (
+                <a
+                  target='_blank'
+                  href='https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en-US'>
+                  click to install
+                </a>
+                )
+              </div>
+            )
+          })
+
           return
         }
         // 请求权限
