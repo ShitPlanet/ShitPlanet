@@ -57,15 +57,20 @@ const Header = () => {
   const connect = React.useCallback(() => {
     const ethereum = (window as any)?.ethereum
     ;(async function() {
-      const accounts = await ethereum.request({
-        method: 'eth_requestAccounts'
-      })
-      const account = accounts[0]
-      if (account) {
-        setAccount(account)
-      }
-      console.log(typeof account)
+      try {
+        const accounts = await ethereum.request({
+          method: 'eth_requestAccounts'
+        })
+        const account = accounts[0]
+        if (account) {
+          setAccount(account)
+        }
+      } catch (error) {}
     })()
+  }, [])
+
+  React.useEffect(() => {
+    connect()
   }, [])
 
   return (
