@@ -88,14 +88,16 @@ const Header = () => {
           <Link href='/nftlist'>NFT lists</Link>
           <Link href='#'>Features</Link>
           <Link href='#'>Team</Link>
-          <Button
-            onClick={() => {
-              connect()
-            }}>
-            {account
-              ? `${account?.slice(0, 4)}...${account?.slice(-4)}`
-              : 'Connect'}
-          </Button>
+          {account ? (
+            <Button
+              onClick={() => {
+                connect()
+              }}>
+              {`${account?.slice(0, 4)}...${account?.slice(-4)}`}
+            </Button>
+          ) : (
+            <Button>Connect</Button>
+          )}
         </Nav>
       </Container>
     </Div>
