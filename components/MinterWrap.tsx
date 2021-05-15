@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components'
 import Loading from './Loading'
+import Minter from './Minter'
 
 const zoomIn = keyframes`
 0% {
@@ -81,8 +82,8 @@ const Wrap = styled.div`
 `
 const LoadingWrap = styled.div`
   position: absolute;
-  width: 10vw;
-  height: 10vw;
+  width: 12vw;
+  height: 12vw;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -98,6 +99,7 @@ const MinterWrap = (props: IProps) => {
       <Title>{props.phase === 1 ? 'SHITPLANET' : 'THE MINTER'}</Title>
       <SubTitle>Blackhole for Shit Tokens</SubTitle>
       <Card>
+        {/* <Minter /> */}
         <Button onClick={props.cancel}>Back</Button>
         <LoadingWrap>
           <Loading />

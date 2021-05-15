@@ -302,7 +302,7 @@ html {
 }
 
 .test {
-  border: none;
-  background-color: transparent;
-  padding: 0;
+  width: 18.5vw;
+  height: 20.7vw;
+  transform: rotate(8deg);
 }

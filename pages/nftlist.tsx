@@ -1,6 +1,7 @@
 import Background from '@/components/Background'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import NFTCard from '@/components/NFTCard'
 import styled from 'styled-components'
 
 const Main = styled.div`
@@ -29,14 +30,6 @@ const List = styled.div`
   width: calc(100% + 2.6vw);
   margin-left: -1.3vw;
 `
-const Item = styled.div`
-  display: inline-block;
-  width: 26.5vw;
-  height: 53vw;
-  border-radius: 1.3vw;
-  margin: 0 1.3vw 3vw 1.3vw;
-  background: linear-gradient(225deg, #326aa6 0%, #2b366c 100%);
-`
 
 const NFTList = () => {
   return (
@@ -50,7 +43,7 @@ const NFTList = () => {
             {Array(6)
               .fill('1')
               .map((i, index) => (
-                <Item key={index}></Item>
+                <NFTCard key={index} {...{ imgNo: index + 1 }} />
               ))}
           </List>
         </Container>

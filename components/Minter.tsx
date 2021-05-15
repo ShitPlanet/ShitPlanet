@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import Image from 'next/image'
 
 const Div = styled.div``
@@ -12,7 +12,13 @@ const Minter = () => {
         <input type='text' placeholder='Destroyed Quantity' />
         <button>MAX</button>
       </InputGroup>
-      <Selector></Selector>
+      <Selector>
+        {Array(10)
+          .fill('1')
+          .map((i, index) => (
+            <option key={index}>{`BTC_${index}`}</option>
+          ))}
+      </Selector>
     </Div>
   )
 }

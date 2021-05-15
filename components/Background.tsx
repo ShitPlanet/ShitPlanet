@@ -97,7 +97,7 @@ const Background = (props: IProps) => {
   const dom2 = useRef<HTMLDivElement>()
   useEffect(() => {
     if (props.phase !== 3) {
-      Lottie.loadAnimation({
+      const k = Lottie.loadAnimation({
         container: dom1.current,
         renderer: 'svg',
         loop: true,

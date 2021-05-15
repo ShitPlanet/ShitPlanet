@@ -44,6 +44,7 @@ const Link = styled.a`
     color: #d6e3ff;
   }
 `
+const Button = styled.div``
 
 const Header = () => {
   return (
@@ -62,6 +63,7 @@ const Header = () => {
           <Link href='#'>Features</Link>
           <Link href='#'>Team</Link>
           <Link href='#'>Sign in</Link>
+          <Button className=''></Button>
         </Nav>
       </Container>
     </Div>

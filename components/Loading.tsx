@@ -10,7 +10,7 @@ const Loading = () => {
   const dom = useRef<HTMLDivElement>()
 
   useEffect(() => {
-    Lottie.loadAnimation({
+    const val = Lottie.loadAnimation({
       container: dom.current,
       renderer: 'svg',
       loop: true,
