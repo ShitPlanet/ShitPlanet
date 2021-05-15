@@ -6,6 +6,11 @@ import NFTCard from '@/components/NFTCard'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
+const Div = styled.div`
+  &.blur {
+    filter: blur(8px);
+  }
+`
 const Main = styled.div`
   position: relative;
   min-height: 141vw;
@@ -37,11 +42,72 @@ const LoadingWrap = styled.div`
   height: 12vw;
   margin: 0 auto;
 `
+const Wrap = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 28.8vw;
+  height: 48vw;
+  cursor: pointer;
+`
+const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  & #NFTCard {
+    position: absolute;
+    top: calc(50% - ${(60 * 100) / 1440}vw);
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`
+const Btn = styled.div`
+  position: absolute;
+  display: flex;
+  width: 26.5vw;
+  margin: 0 1.3vw;
+  justify-content: space-between;
+  top: calc(50% + 22vw);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  & button {
+    width: 47%;
+    height: 4vw;
+    border: none;
+    border-radius: 4vw;
+    font-family: Impact;
+    font-size: 2.2vw;
+    padding: 0;
+    color: #fff;
+  }
+  & button.cancel {
+    background: linear-gradient(90deg, #fe78ad 0%, #f3b197 100%);
+  }
+  & button.cancel:hover {
+    box-shadow: 0 0 0.5vw #fe78ad;
+  }
+  & button.stake,
+  & button.unstake {
+    background: linear-gradient(90deg, #34a0ff 0%, #18d8d5 100%);
+  }
+  & button.stake:hover,
+  & button.unstake:hover {
+    box-shadow: 0 0 0.5vw #34a0ff;
+  }
+`
 
 const NFTList = () => {
   const [loading, setLoading] = useState(true)
+  const [showModal, setShowModal] = useState(false)
+  const [selected, setSelected] = useState<null | {
+    imgNo: number
+    minting: false
+  }>(null)
 
   useEffect(() => {
+    // todo: fetch NFT tokens' information and set loading to false at the end
     setTimeout(() => {
       setLoading(false)
     }, 1200)
@@ -49,30 +115,63 @@ const NFTList = () => {
 
   return (
     <div>
-      <Header />
-      <Main>
-        <Background phase={3} />
-        {loading ? (
-          <Container>
-            <label>NFT list</label>
-            <LoadingWrap>
-              <Loading />
-            </LoadingWrap>
-          </Container>
-        ) : (
-          <Container>
-            <label>NFT list</label>
-            <List>
-              {Array(6)
-                .fill('1')
-                .map((i, index) => (
-                  <NFTCard key={index} {...{ imgNo: index + 1 }} />
-                ))}
-            </List>
-          </Container>
-        )}
-      </Main>
-      <Footer />
+      <Div className={showModal ? 'blur' : ''}>
+        <Header />
+        <Main>
+          <Background phase={3} />
+          {loading ? (
+            <Container>
+              <label>NFT list</label>
+              <LoadingWrap>
+                <Loading />
+              </LoadingWrap>
+            </Container>
+          ) : (
+            <Container>
+              <label>NFT list</label>
+              <List>
+                {Array(6)
+                  .fill('1')
+                  .map((i, index) => (
+                    <Wrap
+                      key={index}
+                      onClick={() => {
+                        setSelected({ imgNo: index + 1, minting: false })
+                        setShowModal(true)
+                      }}>
+                      <NFTCard {...{ imgNo: index + 1 }} />
+                    </Wrap>
+                  ))}
+              </List>
+            </Container>
+          )}
+        </Main>
+        <Footer />
+      </Div>
+      {showModal ? (
+        <Modal>
+          <NFTCard {...selected} />
+          <Btn>
+            <button
+              className='cancel'
+              onClick={() => {
+                setShowModal(false)
+                setSelected(null)
+              }}>
+              Cancel
+            </button>
+            {selected.minting ? (
+              <button className='unstake' onClick={() => {}}>
+                Unstake
+              </button>
+            ) : (
+              <button className='stake' onClick={() => {}}>
+                Stake
+              </button>
+            )}
+          </Btn>
+        </Modal>
+      ) : null}
     </div>
   )
 }

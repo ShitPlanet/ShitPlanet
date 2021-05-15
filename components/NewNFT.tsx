@@ -29,7 +29,7 @@ const Card = styled.div`
 const Div = styled.a`
   position: absolute;
   display: block;
-  top: -4.8vw;
+  top: -1.4vw;
   left: calc(50% - ${(383 * 50) / 1440}vw);
   width: ${(383 * 100) / 1440}vw;
   height: ${(511 * 100) / 1440}vw;

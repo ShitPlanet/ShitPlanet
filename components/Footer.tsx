@@ -66,10 +66,10 @@ const Container2 = styled.div`
   align-item: flex-start;
 `
 const Wrap1 = styled.div`
-  width: 29.8vw;
+  width: 80vw;
   & span {
     display: block;
-    width: 22.6vw;
+    width: 100%;
     font-family: 'Lexend';
     font-size: 0.8vw;
     color: #fff;
@@ -142,9 +142,12 @@ const Footer = () => {
         <Container2>
           <Wrap1>
             <span>
-              The shapes of the profiles during normal and shunting conditions
-              are similar, with more negative values obtained in die posterior
-              section.
+              ShitPlanet aims to burn the shit tokens in the community. In order
+              to reward this purification behavior, we will grant users a
+              limited edition NFT, and users can participate in farming our
+              platform tokens through the NFT power and use our platform tokens
+              to join the democratic governance to build a clean and positive
+              community.
             </span>
           </Wrap1>
           <Wrap2>
@@ -170,7 +173,7 @@ const Footer = () => {
             </div>
           </Wrap2>
           <Wrap3>
-            <div>
+            {/* <div>
               <a href='#'>About us</a>
               <a href='#'>Contract us</a>
               <a href='#'>Jobs</a>
@@ -179,7 +182,7 @@ const Footer = () => {
               <a href='#'>Blogs</a>
               <a href='#'>Teams</a>
               <a href='#'>Privacy</a>
-            </div>
+            </div> */}
           </Wrap3>
         </Container2>
       </div>
