@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
 
@@ -44,9 +45,33 @@ const Link = styled.a`
     color: #d6e3ff;
   }
 `
-const Button = styled.div``
+const Button = styled.button`
+  margin-left: 2.8vw;
+  font-size: 1.3vw;
+`
 
 const Header = () => {
+  const [account, setAccount] = React.useState(null)
+
+  const connect = React.useCallback(() => {
+    const ethereum = (window as any)?.ethereum
+    ;(async function() {
+      try {
+        const accounts = await ethereum.request({
+          method: 'eth_requestAccounts'
+        })
+        const account = accounts[0]
+        if (account) {
+          setAccount(account)
+        }
+      } catch (error) {}
+    })()
+  }, [])
+
+  React.useEffect(() => {
+    connect()
+  }, [])
+
   return (
     <Div>
       <Container>
@@ -62,8 +87,16 @@ const Header = () => {
           <Link href='/nftlist'>NFT lists</Link>
           <Link href='#'>Features</Link>
           <Link href='#'>Team</Link>
-          <Link href='#'>Sign in</Link>
-          <Button className=''></Button>
+          {account ? (
+            <Button
+              onClick={() => {
+                connect()
+              }}>
+              {`${account?.slice(0, 4)}...${account?.slice(-4)}`}
+            </Button>
+          ) : (
+            <Button>Connect</Button>
+          )}
         </Nav>
       </Container>
     </Div>
