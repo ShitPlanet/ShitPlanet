@@ -38,7 +38,7 @@ const NFTList = () => {
       <Main>
         <Background phase={3} />
         <Container>
-          <label>NFT lists</label>
+          <label>NFT list</label>
           <List>
             {Array(6)
               .fill('1')

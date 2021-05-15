@@ -6,7 +6,7 @@ const Div = styled.div`
   position: relative;
   display: inline-block;
   width: 26.5vw;
-  height: 43.6vw;
+  height: 45vw;
   border-radius: 1.3vw;
   margin: 0 1.3vw 3vw 1.3vw;
   background: linear-gradient(225deg, #326aa6 0%, #2b366c 100%);
@@ -59,6 +59,7 @@ const Amount = styled.div`
     padding: 0 1vw;
     font-family: 'IBMPlexSans bold';
     font-size: 2.2vw;
+    line-height: 2.2vw;
     color: #fff;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -75,7 +76,7 @@ const Time = styled.div`
   display: flex;
   text-align: left;
   align-items: flex-start;
-  padding-top: 1vw;
+  padding-top: 0.2vw;
   & span.label {
     font-family: 'Lexend bold';
     font-size: 1.2vw;
