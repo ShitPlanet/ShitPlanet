@@ -99,6 +99,7 @@ const Minter = observer((props: IProps) => {
   const state = useLocalStore(() => ({
     shitContract: null,
     shitboxContract: null,
+    lajiContract: null,
     provider: null,
     signer: null,
     disabled: false,
@@ -163,29 +164,49 @@ const Minter = observer((props: IProps) => {
           })
         )
         setShitTokenList(shitTokenList)
-        state.setToken((shitTokenList[0] as any).address)
-
-        const allowance = await state.shitContract.allowance(
-          store.account,
-          '0x0E31f19aF16103162401345Af527017F2ef62F59'
-        )
-        state.approved = !!allowance
+        if (shitTokenList[0]) {
+          state.token = (shitTokenList[0] as any).address
+        }
       } catch (error) {
       } finally {
       }
     })()
   }, [state.shitContract, state.provider, store.account])
 
+  // 选中的laji币切换时，重新设置lajiContract、approve状态
+  useEffect(() => {
+    ;(async function() {
+      try {
+        state.setToken(state.token)
+        state.lajiContract = new ethers.Contract(
+          state.token,
+          shitAbi,
+          state.signer
+        )
+        const allowance = await state.lajiContract.allowance(
+          store.account,
+          '0x0E31f19aF16103162401345Af527017F2ef62F59'
+        )
+        state.approved = allowance.gt(0)
+      } catch (error) {
+        console.log(error)
+      } finally {
+      }
+    })()
+  }, [state.token])
+
   const approve = useCallback(async () => {
     try {
       props.setLoading(true)
-      const tx = await state.shitContract.approve(
+      const tx = await state.lajiContract.approve(
         '0x0E31f19aF16103162401345Af527017F2ef62F59',
         ethers.BigNumber.from('1000000000000000000000000')
       )
+
       await tx.wait()
       state.approved = true
     } catch (error) {
+      console.log(error)
     } finally {
       props.setLoading(false)
     }
@@ -196,7 +217,9 @@ const Minter = observer((props: IProps) => {
       props.setLoading(true)
       const tx = await state.shitboxContract.mintShitBox(
         state.token,
-        ethers.BigNumber.from(state.mintValue)
+        ethers.BigNumber.from(state.mintValue).mul(
+          ethers.BigNumber.from('1000000000000000000')
+        )
       )
       await tx.wait()
     } catch (error) {
