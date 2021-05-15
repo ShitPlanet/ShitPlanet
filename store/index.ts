@@ -6,7 +6,11 @@ export function useModel() {
     account: null,
     setAccount(value) {
       this.account = value
-    }
+    },
+    provider: null,
+    signer: null,
+    shitContract: null,
+    shitboxContract: null
   }))
 }
 

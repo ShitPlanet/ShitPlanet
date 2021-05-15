@@ -98,10 +98,7 @@ const Minter = observer((props: IProps) => {
 
   const state = useLocalStore(() => ({
     shitContract: null,
-    shitboxContract: null,
     lajiContract: null,
-    provider: null,
-    signer: null,
     disabled: false,
     setDisabled(value) {
       this.disabled = value
@@ -117,44 +114,18 @@ const Minter = observer((props: IProps) => {
     }
   }))
 
-  const [price, setPrice] = useState('')
-  const [expect, setExpect] = useState('')
-
   const [shitTokenList, setShitTokenList] = useState([])
 
   useEffect(() => {
     ;(async function() {
       try {
-        const ethereum = (window as any)?.ethereum
-        if (!ethereum) {
-          return
-        }
-        state.provider = new ethers.providers.Web3Provider(ethereum)
-        state.signer = state.provider.getSigner()
-        state.shitContract = new ethers.Contract(
-          address.shit,
-          shitAbi,
-          state.signer
-        )
-        state.shitboxContract = new ethers.Contract(
-          address.shitbox,
-          shitboxAbi,
-          state.signer
-        )
-      } catch (error) {}
-    })()
-  }, [])
-
-  useEffect(() => {
-    ;(async function() {
-      try {
-        const shitTokenAddressList = await state.shitContract.getShitTokenList()
+        const shitTokenAddressList = await store.shitContract.getShitTokenList()
         const shitTokenList = await Promise.all(
           shitTokenAddressList.map(async address => {
             const thirtyPartyShitContract = new ethers.Contract(
               address,
               template,
-              state.provider
+              store.provider
             )
             const name = await thirtyPartyShitContract.name()
             return {
@@ -171,7 +142,7 @@ const Minter = observer((props: IProps) => {
       } finally {
       }
     })()
-  }, [state.shitContract, state.provider, store.account])
+  }, [store.shitContract, store.provider, store.account])
 
   // 选中的laji币切换时，重新设置lajiContract、approve状态
   useEffect(() => {
@@ -181,7 +152,7 @@ const Minter = observer((props: IProps) => {
         state.lajiContract = new ethers.Contract(
           state.token,
           shitAbi,
-          state.signer
+          store.signer
         )
         const allowance = await state.lajiContract.allowance(
           store.account,
@@ -210,12 +181,12 @@ const Minter = observer((props: IProps) => {
     } finally {
       props.setLoading(false)
     }
-  }, [state.shitContract])
+  }, [store.shitContract])
 
   const mint = useCallback(async () => {
     try {
       props.setLoading(true)
-      const tx = await state.shitboxContract.mintShitBox(
+      const tx = await store.shitboxContract.mintShitBox(
         state.token,
         ethers.BigNumber.from(state.mintValue).mul(
           ethers.BigNumber.from('1000000000000000000')
@@ -228,7 +199,7 @@ const Minter = observer((props: IProps) => {
     } finally {
       props.setLoading(false)
     }
-  }, [state.shitContract])
+  }, [store.shitContract])
 
   return (
     <Div>
