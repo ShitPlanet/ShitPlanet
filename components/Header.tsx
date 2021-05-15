@@ -53,6 +53,30 @@ const Button = styled.button`
 
 const Header = () => {
   const [account, setAccount] = React.useState(null)
+  const [disabled, setDisabled] = React.useState(false)
+
+  const getAccount = React.useCallback(() => {
+    ;(async function() {
+      try {
+        setDisabled(true)
+        const ethereum = (window as any)?.ethereum
+
+        // 获取用户信息
+        const accounts = await ethereum.request({
+          method: 'eth_requestAccounts'
+        })
+        if (accounts[0]) {
+          setAccount(accounts[0])
+        }
+      } finally {
+        setDisabled(false)
+      }
+    })()
+  }, [])
+
+  React.useEffect(() => {
+    getAccount()
+  }, [])
 
   const connect = React.useCallback(() => {
     ;(async function() {
@@ -68,13 +92,12 @@ const Header = () => {
           params: [{ eth_accounts: {} }]
         })
 
-        // 获取用户信息
-        const accounts = await ethereum.request({
-          method: 'eth_requestAccounts'
-        })
-        const account = accounts[0]
-        if (account) {
-          setAccount(account)
+        const accountsPermission = permissions.find(
+          permission => permission.parentCapability === 'eth_accounts'
+        )
+
+        if (accountsPermission) {
+          getAccount()
         }
       } catch (error) {
         console.log(error)
@@ -138,6 +161,7 @@ const Header = () => {
             <Button>{`${account?.slice(0, 4)}...${account?.slice(-4)}`}</Button>
           ) : (
             <Button
+              disabled={disabled}
               onClick={() => {
                 connect()
               }}>
