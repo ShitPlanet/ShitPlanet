@@ -52,7 +52,6 @@ const Button = styled.button`
 `
 
 const Header = () => {
-  const [connected, setConnected] = React.useState(false)
   const [account, setAccount] = React.useState(null)
 
   const connect = React.useCallback(() => {
@@ -63,10 +62,9 @@ const Header = () => {
       })
       const account = accounts[0]
       if (account) {
-        setConnected(true)
         setAccount(account)
       }
-      console.log(account)
+      console.log(typeof account)
     })()
   }, [])
 
@@ -89,7 +87,9 @@ const Header = () => {
             onClick={() => {
               connect()
             }}>
-            {connected ? account : 'Connect'}
+            {account
+              ? `${account?.slice(0, 4)}...${account?.slice(-4)}`
+              : 'Connect'}
           </Button>
         </Nav>
       </Container>
