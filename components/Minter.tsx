@@ -94,17 +94,20 @@ interface IProps {
 const Minter = observer((props: IProps) => {
   const store = useLocalStore(() => ({
     shitContract: null,
-    provider: null
+    provider: null,
+    signer: null,
+    disabled: false,
+    setDisabled(value) {
+      this.disabled = value
+    },
+    approved: false
   }))
 
   const [token, setToken] = useState('0')
   const [price, setPrice] = useState('')
   const [expect, setExpect] = useState('')
-  const [approved, setApproved] = useState(false)
 
   const [shitTokenList, setShitTokenList] = useState([])
-
-  const [disabled, setDisabled] = useState(false)
 
   useEffect(() => {
     ;(async function() {
@@ -114,10 +117,11 @@ const Minter = observer((props: IProps) => {
           return
         }
         store.provider = new ethers.providers.Web3Provider(ethereum)
+        store.signer = store.provider.getSigner()
         store.shitContract = new ethers.Contract(
           address.shit,
           shitAbi,
-          store.provider
+          store.signer
         )
       } catch (error) {}
     })()
@@ -149,6 +153,21 @@ const Minter = observer((props: IProps) => {
     })()
   }, [store.shitContract, store.provider])
 
+  const approve = useCallback(async () => {
+    try {
+      store.setDisabled(true)
+      const tx = await store.shitContract.approve(
+        '0x0E31f19aF16103162401345Af527017F2ef62F59',
+        ethers.BigNumber.from('1000000000000000000000000')
+      )
+      await tx.wait()
+      store.approved = true
+    } catch (error) {
+    } finally {
+      store.setDisabled(false)
+    }
+  }, [store.shitContract])
+
   return (
     <Div>
       <InputGroup>
@@ -167,12 +186,17 @@ const Minter = observer((props: IProps) => {
       <Price>Token Price: {price || '3.1100'}</Price>
       <Expect>Expected Mint: {expect || '13.5554'}</Expect>
       <Button
+        disabled={store.disabled}
         onClick={() => {
-          props.setLoading(true)
-          setTimeout(() => {
-            props.setLoading(false)
-            props.setNewlyMinted({ level: 1 })
-          }, 2000)
+          if (!store.approved) {
+            approve()
+          } else {
+            props.setLoading(true)
+            setTimeout(() => {
+              props.setLoading(false)
+              props.setNewlyMinted({ level: 1 })
+            }, 2000)
+          }
         }}>
         <svg
           width='30'
@@ -187,7 +211,7 @@ const Minter = observer((props: IProps) => {
             fill='white'
           />
         </svg>
-        {approved ? 'Mint NFT' : 'Approve'}
+        {store.approved ? 'Mint NFT' : 'Approve'}
       </Button>
     </Div>
   )
