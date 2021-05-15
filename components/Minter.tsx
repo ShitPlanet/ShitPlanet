@@ -1,3 +1,4 @@
+import { useLocalStore, observer } from 'mobx-react-lite'
 import { ethers } from 'ethers'
 import styled from 'styled-components'
 import Selector from './Selector'
@@ -89,10 +90,17 @@ interface IProps {
   setLoading: (val: boolean) => void
   setNewlyMinted: (val: { level: number }) => void
 }
-const Minter = (props: IProps) => {
+
+const Minter = observer((props: IProps) => {
+  const store = useLocalStore(() => ({
+    shitContract: null,
+    provider: null
+  }))
+
   const [token, setToken] = useState('0')
   const [price, setPrice] = useState('')
   const [expect, setExpect] = useState('')
+  const [approved, setApproved] = useState(false)
 
   const [shitTokenList, setShitTokenList] = useState([])
 
@@ -105,19 +113,26 @@ const Minter = (props: IProps) => {
         if (!ethereum) {
           return
         }
-        const provider = new ethers.providers.Web3Provider(ethereum)
-        const shitContract = new ethers.Contract(
+        store.provider = new ethers.providers.Web3Provider(ethereum)
+        store.shitContract = new ethers.Contract(
           address.shit,
           shitAbi,
-          provider
+          store.provider
         )
-        const shitTokenAddressList = await shitContract.getShitTokenList()
+      } catch (error) {}
+    })()
+  }, [])
+
+  useEffect(() => {
+    ;(async function() {
+      try {
+        const shitTokenAddressList = await store.shitContract.getShitTokenList()
         const shitTokenList = await Promise.all(
           shitTokenAddressList.map(async address => {
             const thirtyPartyShitContract = new ethers.Contract(
               address,
               template,
-              provider
+              store.provider
             )
             const name = await thirtyPartyShitContract.name()
             return {
@@ -132,7 +147,7 @@ const Minter = (props: IProps) => {
       } finally {
       }
     })()
-  }, [])
+  }, [store.shitContract, store.provider])
 
   return (
     <Div>
@@ -172,10 +187,9 @@ const Minter = (props: IProps) => {
             fill='white'
           />
         </svg>
-        Mint NFT
+        {approved ? 'Mint NFT' : 'Approve'}
       </Button>
     </Div>
   )
-}
-
+})
 export default Minter
