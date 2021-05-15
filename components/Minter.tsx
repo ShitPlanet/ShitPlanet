@@ -6,6 +6,7 @@ import { useState, useCallback, useEffect, useMemo } from 'react'
 import shitAbi from '@/config/abi/shit.json'
 import template from '@/config/abi/template.json'
 import address from '@/config/constants/address.json'
+import { useStore } from '@/store'
 
 const Div = styled.div`
   position: relative;
@@ -92,7 +93,9 @@ interface IProps {
 }
 
 const Minter = observer((props: IProps) => {
-  const store = useLocalStore(() => ({
+  const store = useStore()
+
+  const state = useLocalStore(() => ({
     shitContract: null,
     provider: null,
     signer: null,
@@ -116,12 +119,12 @@ const Minter = observer((props: IProps) => {
         if (!ethereum) {
           return
         }
-        store.provider = new ethers.providers.Web3Provider(ethereum)
-        store.signer = store.provider.getSigner()
-        store.shitContract = new ethers.Contract(
+        state.provider = new ethers.providers.Web3Provider(ethereum)
+        state.signer = state.provider.getSigner()
+        state.shitContract = new ethers.Contract(
           address.shit,
           shitAbi,
-          store.signer
+          state.signer
         )
       } catch (error) {}
     })()
@@ -130,13 +133,13 @@ const Minter = observer((props: IProps) => {
   useEffect(() => {
     ;(async function() {
       try {
-        const shitTokenAddressList = await store.shitContract.getShitTokenList()
+        const shitTokenAddressList = await state.shitContract.getShitTokenList()
         const shitTokenList = await Promise.all(
           shitTokenAddressList.map(async address => {
             const thirtyPartyShitContract = new ethers.Contract(
               address,
               template,
-              store.provider
+              state.provider
             )
             const name = await thirtyPartyShitContract.name()
             return {
@@ -147,26 +150,32 @@ const Minter = observer((props: IProps) => {
         )
         setShitTokenList(shitTokenList)
         setToken((shitTokenList[0] as any).address)
+
+        const allowance = await state.shitContract.allowance(
+          store.account,
+          '0x0E31f19aF16103162401345Af527017F2ef62F59'
+        )
+        state.approved = !!allowance
       } catch (error) {
       } finally {
       }
     })()
-  }, [store.shitContract, store.provider])
+  }, [state.shitContract, state.provider, store.account])
 
   const approve = useCallback(async () => {
     try {
-      store.setDisabled(true)
-      const tx = await store.shitContract.approve(
+      props.setLoading(true)
+      const tx = await state.shitContract.approve(
         '0x0E31f19aF16103162401345Af527017F2ef62F59',
         ethers.BigNumber.from('1000000000000000000000000')
       )
       await tx.wait()
-      store.approved = true
+      state.approved = true
     } catch (error) {
     } finally {
-      store.setDisabled(false)
+      props.setLoading(false)
     }
-  }, [store.shitContract])
+  }, [state.shitContract])
 
   return (
     <Div>
@@ -186,9 +195,9 @@ const Minter = observer((props: IProps) => {
       <Price>Token Price: {price || '3.1100'}</Price>
       <Expect>Expected Mint: {expect || '13.5554'}</Expect>
       <Button
-        disabled={store.disabled}
+        disabled={state.disabled}
         onClick={() => {
-          if (!store.approved) {
+          if (!state.approved) {
             approve()
           } else {
             props.setLoading(true)
@@ -211,7 +220,7 @@ const Minter = observer((props: IProps) => {
             fill='white'
           />
         </svg>
-        {store.approved ? 'Mint NFT' : 'Approve'}
+        {state.approved ? 'Mint NFT' : 'Approve'}
       </Button>
     </Div>
   )
