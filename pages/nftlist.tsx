@@ -1,3 +1,4 @@
+import { useLocalStore } from 'mobx-react-lite'
 import Background from '@/components/Background'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
@@ -5,6 +6,7 @@ import Loading from '@/components/Loading'
 import NFTCard from '@/components/NFTCard'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useStore } from '@/store'
 
 const Div = styled.div`
   &.blur {
@@ -99,6 +101,12 @@ const Btn = styled.div`
 `
 
 const NFTList = () => {
+  const store = useStore()
+
+  const state = useLocalStore(() => ({
+    nftTokens: []
+  }))
+
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
   const [selected, setSelected] = useState<null | {
@@ -107,11 +115,18 @@ const NFTList = () => {
   }>(null)
 
   useEffect(() => {
-    // todo: fetch NFT tokens' information and set loading to false at the end
-    setTimeout(() => {
-      setLoading(false)
-    }, 1200)
-  }, [])
+    ;(async function() {
+      try {
+        if (!store.shitboxContract) return
+        state.nftTokens = await store.shitboxContract.tokensOfOwner(
+          store.account
+        )
+      } catch (error) {
+      } finally {
+        setLoading(false)
+      }
+    })()
+  }, [store.shitboxContract])
 
   return (
     <div>
