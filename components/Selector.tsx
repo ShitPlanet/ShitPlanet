@@ -6,13 +6,10 @@ const Div = styled.div`
   top: 0;
   right: 0;
   width: ${(163 * 100) / 1440}vw;
-  height: calc(5.5vw - 4px);
   border: 2px solid rgba(255, 255, 255, 0.77);
   border-radius: 0.3vw;
+  background: linear-gradient(225deg, #326aa6 0%, #2b366c 100%);
   &.show {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom: none;
     border-color: #bcffce;
   }
   & button {
@@ -26,25 +23,15 @@ const Div = styled.div`
     color: #fff;
     outline: none;
   }
-  & button svg {
-  }
   & .select {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 100%;
+    height: calc(5.5vw - 8px);
   }
   & .options {
     display: none;
-    left: -2px;
-    right: -2px;
     top: 4.4vw;
-    position: absolute;
-    border-bottom-left-radius: 0.3vw;
-    border-bottom-right-radius: 0.3vw;
-    border-left: 2px solid #bcffce;
-    border-right: 2px solid #bcffce;
-    border-bottom: 2px solid #bcffce;
   }
   &.show .options {
     display: block;
@@ -52,6 +39,10 @@ const Div = styled.div`
   & .options button {
     margin: 1vw 0;
     opacity: 0.9;
+    line-height: 1;
+  }
+  & .options button:first-child {
+    margin-top: 0.6vw;
   }
   & .options button:hover {
     opacity: 1;

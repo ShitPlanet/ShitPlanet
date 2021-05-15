@@ -191,12 +191,12 @@ const Header = () => {
           <Link href='#'>Features</Link>
           <Link href='#'>Team</Link>
           {store.account ? (
-            <Button>{`${store.account?.slice(0, 4)}...${store.account?.slice(
-              -4
-            )}`}</Button>
+            <Button className='connected'>{`${store.account?.slice(
+              0,
+              4
+            )}...${store.account?.slice(-4)}`}</Button>
           ) : (
             <Button
-              className='connected'
               disabled={disabled}
               onClick={() => {
                 connect()

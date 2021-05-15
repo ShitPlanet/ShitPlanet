@@ -5,24 +5,25 @@ import Minter from './Minter'
 import NewNFT from './NewNFT'
 
 const zoomIn = keyframes`
-0% {
-  opacity: 0;
-  transform: scale(0.2);
-}
-100% {
-  opacity: 1;
-  transform: scale(1);
-}
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 `
 
 const Title = styled.div`
   font-family: 'Bungee';
   font-size: 6.4vw;
+  line-height: 6vw;
   background-image: linear-gradient(140deg, #5a6cd8, #53bbf8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   cursor: default;
-  transform: scale(1) translateY(11.3vw);
+  transform: scale(1) translateY(18.8vw);
   transition: opacity 600ms ease-out, transform 400ms 200ms ease-out;
   opacity: 1;
   pointer-events: none;
@@ -33,7 +34,8 @@ const SubTitle = styled.div`
   font-weight: bold;
   font-size: 3.2vw;
   color: #fff;
-  margin-bottom: 2.7vw;
+  line-height: 1;
+  margin-bottom: 2.6vw;
   cursor: default;
   opacity: 0;
   transition: opacity 300ms ease-out;
@@ -43,7 +45,7 @@ const Card = styled.div`
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  height: 26.2vw;
+  height: 27.6vw;
   background: linear-gradient(225deg, #326aa6 0%, #2b366c 100%);
   border-radius: 1.3vw;
   opacity: 0;
@@ -73,7 +75,8 @@ const Wrap = styled.div`
   top: 6.25vw;
   left: 14.5vw;
   text-align: center;
-  margin: 6.25vw auto;
+  padding: 0 0;
+  margin: 0 auto;
   pointer-events: none;
   transform-origin: center;
   transition: opacity 400ms 200ms ease-out;

@@ -5,7 +5,13 @@ import Image from 'next/image'
 import Background from './Background'
 import { useState } from 'react'
 import MinterWrap from './MinterWrap'
+import VideoPlayer from './VideoPlayer'
 
+const Div = styled.div`
+  &.blur {
+    filter: blur(8px);
+  }
+`
 const Main = styled.div`
   position: relative;
   width: 100vw;
@@ -36,7 +42,8 @@ const Description = styled.div`
 `
 const Container = styled.div`
   width: 44.7vw;
-  margin: 20vw auto;
+  padding: 20vw 0;
+  margin: 0 auto;
   text-align: center;
   opacity: 1;
   transition: opacity 300ms ease-out;
@@ -49,6 +56,7 @@ const Container = styled.div`
 const Title = styled.div`
   font-family: 'Bungee';
   font-size: 6.4vw;
+  line-height: 5vw;
   background-image: linear-gradient(140deg, #5a6cd8, #53bbf8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -99,28 +107,32 @@ const Img = styled.div`
 
 const Landing = () => {
   const [phase, setPhase] = useState(1)
+  const [playVideo, setPlayVideo] = useState(false)
   return (
     <div>
-      <Header />
-      <Main>
-        <Background phase={phase} />
-        <Container className={phase === 2 ? 'hidden' : ''}>
-          <SubTitle>Blackhole for Shit Tokens</SubTitle>
-          <Title>SHITPLANET</Title>
-          <Description>- Revolutionary NFT Tool For Everyone -</Description>
-          <Button onClick={() => setPhase(phase === 1 ? 2 : 1)}>
-            <Icon>
-              <Image src='/image/icon-planet.svg' layout='fill' />
-            </Icon>
-            <span>Get Started</span>
-          </Button>
-        </Container>
-        <MinterWrap phase={phase} cancel={() => setPhase(1)} />
-        <Img className={phase === 2 ? 'left' : ''}>
-          <Image src='/image/ufo.svg' layout='fill' />
-        </Img>
-      </Main>
-      <Footer />
+      <Div className={playVideo ? 'blur' : ''}>
+        <Header />
+        <Main>
+          <Background phase={phase} />
+          <Container className={phase === 2 ? 'hidden' : ''}>
+            <SubTitle>Blackhole for Shit Tokens</SubTitle>
+            <Title>SHITPLANET</Title>
+            <Description>- Revolutionary NFT Tool For Everyone -</Description>
+            <Button onClick={() => setPhase(phase === 1 ? 2 : 1)}>
+              <Icon>
+                <Image src='/image/icon-planet.svg' layout='fill' />
+              </Icon>
+              <span>Get Started</span>
+            </Button>
+          </Container>
+          <MinterWrap phase={phase} cancel={() => setPhase(1)} />
+          <Img className={phase === 2 ? 'left' : ''}>
+            <Image src='/image/ufo.svg' layout='fill' />
+          </Img>
+        </Main>
+        <Footer />
+      </Div>
+      {playVideo ? <VideoPlayer /> : null}
     </div>
   )
 }

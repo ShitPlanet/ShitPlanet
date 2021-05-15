@@ -1,7 +1,9 @@
 import Background from '@/components/Background'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import Loading from '@/components/Loading'
 import NFTCard from '@/components/NFTCard'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const Main = styled.div`
@@ -30,23 +32,45 @@ const List = styled.div`
   width: calc(100% + 2.6vw);
   margin-left: -1.3vw;
 `
+const LoadingWrap = styled.div`
+  width: 12vw;
+  height: 12vw;
+  margin: 0 auto;
+`
 
 const NFTList = () => {
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 1200)
+  }, [])
+
   return (
     <div>
       <Header />
       <Main>
         <Background phase={3} />
-        <Container>
-          <label>NFT list</label>
-          <List>
-            {Array(6)
-              .fill('1')
-              .map((i, index) => (
-                <NFTCard key={index} {...{ imgNo: index + 1 }} />
-              ))}
-          </List>
-        </Container>
+        {loading ? (
+          <Container>
+            <label>NFT list</label>
+            <LoadingWrap>
+              <Loading />
+            </LoadingWrap>
+          </Container>
+        ) : (
+          <Container>
+            <label>NFT list</label>
+            <List>
+              {Array(6)
+                .fill('1')
+                .map((i, index) => (
+                  <NFTCard key={index} {...{ imgNo: index + 1 }} />
+                ))}
+            </List>
+          </Container>
+        )}
       </Main>
       <Footer />
     </div>

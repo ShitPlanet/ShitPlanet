@@ -76,6 +76,8 @@ const Wrap = styled.div`
   &.phase_2 ${Img1} {
     left: 78.5vw;
     top: 3.5vw;
+    width: 25.1vw;
+    height: 28.5vw;
     transform: rotate(0);
   }
   &.phase_2 ${Img3} {
