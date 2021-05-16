@@ -155,6 +155,7 @@ const Upgrade = styled.button`
 `
 
 interface IProps {
+  name: string
   type?: string
   name?: string
   imgNo?: number
@@ -246,7 +247,7 @@ const NFTCard = (props: IProps) => {
         <Amount>
           <span className='label'>Burned Amount:</span>
           <span className='stk'>
-            {ethers.utils.formatEther(props.amount) || ''} STK
+            {ethers.utils.formatEther(props.amount) || ''} {props.name || ''}
           </span>
           <span className='usd'>
             ≈ {ethers.utils.formatEther(props.usd) || ''} USD
