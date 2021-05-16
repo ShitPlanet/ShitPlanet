@@ -74,7 +74,7 @@ const Expect = styled.div`
 `
 const Button = styled.button`
   float: right;
-  margin-top: ${(40 * 100) / 1440}vw;
+  margin-top: ${(160 * 100) / 1440}vw;
   width: ${(300 * 100) / 1440}vw;
   height: ${(80 * 100) / 1440}vw;
   border: none;
@@ -98,10 +98,7 @@ const Minter = observer((props: IProps) => {
 
   const state = useLocalStore(() => ({
     shitContract: null,
-    shitboxContract: null,
     lajiContract: null,
-    provider: null,
-    signer: null,
     disabled: false,
     setDisabled(value) {
       this.disabled = value
@@ -114,47 +111,22 @@ const Minter = observer((props: IProps) => {
     mintValue: '',
     setMintValue(value) {
       this.mintValue = value
-    }
+    },
+    allowance: ethers.BigNumber.from(0)
   }))
-
-  const [price, setPrice] = useState('')
-  const [expect, setExpect] = useState('')
 
   const [shitTokenList, setShitTokenList] = useState([])
 
   useEffect(() => {
     ;(async function() {
       try {
-        const ethereum = (window as any)?.ethereum
-        if (!ethereum) {
-          return
-        }
-        state.provider = new ethers.providers.Web3Provider(ethereum)
-        state.signer = state.provider.getSigner()
-        state.shitContract = new ethers.Contract(
-          address.shit,
-          shitAbi,
-          state.signer
-        )
-        state.shitboxContract = new ethers.Contract(
-          address.shitbox,
-          shitboxAbi,
-          state.signer
-        )
-      } catch (error) {}
-    })()
-  }, [])
-
-  useEffect(() => {
-    ;(async function() {
-      try {
-        const shitTokenAddressList = await state.shitContract.getShitTokenList()
+        const shitTokenAddressList = await store.shitContract.getShitTokenList()
         const shitTokenList = await Promise.all(
           shitTokenAddressList.map(async address => {
             const thirtyPartyShitContract = new ethers.Contract(
               address,
               template,
-              state.provider
+              store.provider
             )
             const name = await thirtyPartyShitContract.name()
             return {
@@ -165,28 +137,28 @@ const Minter = observer((props: IProps) => {
         )
         setShitTokenList(shitTokenList)
         if (shitTokenList[0]) {
-          state.token = (shitTokenList[0] as any).address
+          state.setToken((shitTokenList[0] as any).address)
         }
       } catch (error) {
       } finally {
       }
     })()
-  }, [state.shitContract, state.provider, store.account])
+  }, [store.shitContract, store.provider, store.account])
 
-  // 选中的laji币切换时，重新设置lajiContract、approve状态
+  // 选中的laji币切换时，重新设置lajiContract、approve、上限状态
   useEffect(() => {
     ;(async function() {
       try {
-        state.setToken(state.token)
         state.lajiContract = new ethers.Contract(
           state.token,
           shitAbi,
-          state.signer
+          store.signer
         )
         const allowance = await state.lajiContract.allowance(
           store.account,
           '0x0E31f19aF16103162401345Af527017F2ef62F59'
         )
+        state.allowance = allowance
         state.approved = allowance.gt(0)
       } catch (error) {
         console.log(error)
@@ -210,24 +182,25 @@ const Minter = observer((props: IProps) => {
     } finally {
       props.setLoading(false)
     }
-  }, [state.shitContract])
+  }, [store.shitContract])
 
   const mint = useCallback(async () => {
     try {
       props.setLoading(true)
-      const tx = await state.shitboxContract.mintShitBox(
+      const tx = await store.shitboxContract.mintShitBox(
         state.token,
         ethers.BigNumber.from(state.mintValue).mul(
           ethers.BigNumber.from('1000000000000000000')
         )
       )
       await tx.wait()
+      props.setNewlyMinted({ level: 1 })
     } catch (error) {
       console.log(error)
     } finally {
       props.setLoading(false)
     }
-  }, [state.shitContract])
+  }, [store.shitContract])
 
   return (
     <Div>
@@ -240,7 +213,15 @@ const Minter = observer((props: IProps) => {
           type='number'
           placeholder='Destroyed Quantity'
         />
-        <button>MAX</button>
+        <button
+          onClick={() => {
+            const max = state.allowance
+              .div(ethers.BigNumber.from('1000000000000000000'))
+              .toNumber()
+            state.setMintValue(max)
+          }}>
+          MAX
+        </button>
       </InputGroup>
       <Selector
         placeholder=''
@@ -251,8 +232,6 @@ const Minter = observer((props: IProps) => {
         }))}
         onChange={val => state.setToken(val)}
       />
-      <Price>Token Price: {price || '3.1100'}</Price>
-      <Expect>Expected Mint: {expect || '13.5554'}</Expect>
       <Button
         disabled={state.disabled}
         onClick={() => {

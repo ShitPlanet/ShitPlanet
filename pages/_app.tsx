@@ -5,6 +5,11 @@ import { observer } from 'mobx-react-lite'
 import { Provider } from '@/store'
 import Head from 'next/head'
 import { META } from '@/constant'
+import { useStore } from '@/store'
+import { ethers } from 'ethers'
+import address from '@/config/constants/address.json'
+import shitAbi from '@/config/abi/shit.json'
+import shitboxAbi from '@/config/abi/shitbox.json'
 
 type Props = {
   Component: any
@@ -12,6 +17,8 @@ type Props = {
 }
 
 const App = observer(function App({ Component, pageProps }: Props) {
+  const store = useStore()
+
   const { statusCode } = pageProps
   useEffect(() => {
     const onResize = () => {
@@ -23,6 +30,29 @@ const App = observer(function App({ Component, pageProps }: Props) {
     onResize()
 
     return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  useEffect(() => {
+    ;(async function() {
+      try {
+        const ethereum = (window as any)?.ethereum
+        if (!ethereum) {
+          return
+        }
+        store.provider = new ethers.providers.Web3Provider(ethereum)
+        store.signer = store.provider.getSigner()
+        store.shitContract = new ethers.Contract(
+          address.shit,
+          shitAbi,
+          store.signer
+        )
+        store.shitboxContract = new ethers.Contract(
+          address.shitbox,
+          shitboxAbi,
+          store.signer
+        )
+      } catch (error) {}
+    })()
   }, [])
 
   if (statusCode) {
