@@ -36,7 +36,8 @@ Each card has 5 levels, and it will be **randomly** determined when clicking to 
 
 
 ### NFT List
-<img width="599" alt="截屏2021-05-16 上午9 52 32" src="https://user-images.githubusercontent.com/37820916/118382974-9506d000-b62c-11eb-9241-9ae82a0b7e2b.png">
+<img width="599" alt="截屏2021-05-16 上午9 52 32" src="https://user-images.githubusercontent.com/7068217/118384595-ccc84480-b639-11eb-8d87-238ad722d0ee.png">
+
 
 Based on the rank and the level, each NFT card will have its own determined mining power. Users will see the NFT list he get by destroying shit tokens. And the card will demonstrate the burnt amount and value and burnt time information, etc. Users also can use our platform token SHIT to upgrade the NFT card's mining power by clicking the upgrade button to burn our platform token SHIT.
 
