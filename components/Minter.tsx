@@ -182,8 +182,11 @@ const Minter = observer((props: IProps) => {
       props.setLoading(true)
       const tx = await store.shitboxContract.mintShitBox(
         state.token,
-        ethers.utils.parseEther(state.mintValue)
+        ethers.BigNumber.from(state.mintValue).mul(
+          ethers.BigNumber.from('1000000000000000000')
+        )
       )
+
       await tx.wait()
       props.setNewlyMinted({ level: 1 })
     } catch (error) {
