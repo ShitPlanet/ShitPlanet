@@ -170,6 +170,13 @@ const NFTCard = (props: IProps) => {
   const [time, setTime] = useState('')
   const [powerStr, setPowerStr] = useState('')
   useEffect(() => {
+    if (props.power) {
+      const length = props.power.toString().length
+      if (length <= 3) {
+      }
+      if (length > 3 && length) {
+      }
+    }
     if (props.timestamp) {
       const date = new Date(props.timestamp?.toNumber() * 1000)
       const str = `${date.getMonth() +

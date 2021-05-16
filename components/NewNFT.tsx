@@ -200,7 +200,7 @@ const NewNFT = (props: IProps) => {
     { name1: 'Alien shit', name2: '', image: 'shit' }
   ]
   return (
-    <Div href='/nftlist' className={`level_${props.level.toNumber()}`}>
+    <Div href='/nftlist' className={`level_${props.level?.toNumber() || 1}`}>
       <BG1>
         <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 458.246 551.302'>
           <path
@@ -220,7 +220,7 @@ const NewNFT = (props: IProps) => {
             <span>{arr[category]?.name1 || ''}</span>
             <span>{arr[category]?.name2 || ''}</span>
           </Text>
-          <Level level={props.level.toNumber()} />
+          <Level level={props.level?.toNumber() || 1} />
         </Header>
         <Power className={props.minting ? 'minting' : ''}>
           <svg
