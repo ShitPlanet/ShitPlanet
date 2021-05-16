@@ -99,7 +99,11 @@ const Minter = observer((props: IProps) => {
     setMintValue(value) {
       this.mintValue = value
     },
-    allowance: ethers.BigNumber.from(0)
+    allowance: ethers.BigNumber.from(0),
+    balance: 0,
+    setBalance(value) {
+      this.balance = value
+    }
   }))
 
   const [shitTokenList, setShitTokenList] = useState([])
@@ -152,6 +156,11 @@ const Minter = observer((props: IProps) => {
         )
         state.allowance = allowance
         state.approved = allowance.gt(0)
+
+        const balance = await state.lajiContract.balanceOf(store.account)
+        state.setBalance(
+          balance.div(ethers.BigNumber.from('1000000000000000000'))?.toNumber()
+        )
       } catch (error) {
         console.log(error)
       } finally {
@@ -230,10 +239,7 @@ const Minter = observer((props: IProps) => {
         />
         <button
           onClick={() => {
-            const max = state.allowance
-              .div(ethers.BigNumber.from('1000000000000000000'))
-              ?.toNumber()
-            state.setMintValue(max)
+            state.setMintValue(state.balance)
           }}>
           MAX
         </button>
