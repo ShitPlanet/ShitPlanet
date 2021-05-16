@@ -172,7 +172,8 @@ const NFTCard = (props: IProps) => {
   useEffect(() => {
     if (props.timestamp) {
       const date = new Date(props.timestamp?.toNumber() * 1000)
-      const str = `${date.getMonth()} ${date.getDate()}, ${date.getFullYear()}`
+      const str = `${date.getMonth() +
+        1} ${date.getDate()}, ${date.getFullYear()}`
       setTime(str)
     }
     if (props.usd) {
