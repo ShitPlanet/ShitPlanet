@@ -92,8 +92,7 @@ const Selector = (props: IProps) => {
   }, [props.value])
 
   const calculatedOptions = useMemo(() => {
-    const index = props.options.findIndex(item => item.value === props.value)
-    return props.options.splice(index, 1)
+    return props.options.filter(item => item.value !== props.value)
   }, [props.options, props.value])
 
   return (
