@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import Level from './Level'
@@ -144,7 +145,7 @@ interface IProps {
   name?: string
   imgNo?: number
   amount?: number
-  timestamp?: number
+  timestamp?: BigNumber
   usd?: BigNumber
   power?: number
   minting?: boolean
@@ -154,38 +155,40 @@ const NewNFT = (props: IProps) => {
   const [category, setCategory] = useState(-1)
   useEffect(() => {
     if (props.usd) {
+      const val = ethers.utils.formatEther(props.usd)
       let category: number
       if (
-        props.usd.gt(BigNumber.from('0')) &&
-        props.usd.lte(BigNumber.from('10'))
+        props.usd.gt(ethers.utils.parseEther('0')) &&
+        props.usd.lte(ethers.utils.parseEther('10'))
       ) {
         category = 0
       } else if (
-        props.usd.gt(BigNumber.from('10')) &&
-        props.usd.lte(BigNumber.from('100'))
+        props.usd.gt(ethers.utils.parseEther('10')) &&
+        props.usd.lte(ethers.utils.parseEther('100'))
       ) {
         category = 1
       } else if (
-        props.usd.gt(BigNumber.from('100')) &&
-        props.usd.lte(BigNumber.from('1000'))
+        props.usd.gt(ethers.utils.parseEther('100')) &&
+        props.usd.lte(ethers.utils.parseEther('1000'))
       ) {
         category = 2
       } else if (
-        props.usd.gt(BigNumber.from('1000')) &&
-        props.usd.lte(BigNumber.from('10000'))
+        props.usd.gt(ethers.utils.parseEther('1000')) &&
+        props.usd.lte(ethers.utils.parseEther('10000'))
       ) {
         category = 3
       } else if (
-        props.usd.gt(BigNumber.from('10000')) &&
-        props.usd.lte(BigNumber.from('100000'))
+        props.usd.gt(ethers.utils.parseEther('10000')) &&
+        props.usd.lte(ethers.utils.parseEther('100000'))
       ) {
         category = 4
       } else if (
-        props.usd.gt(BigNumber.from('0')) &&
-        props.usd.lte(BigNumber.from('10'))
+        props.usd.gt(ethers.utils.parseEther('0')) &&
+        props.usd.lte(ethers.utils.parseEther('10'))
       ) {
         category = 5
       }
+      console.log(category)
       setCategory(category)
     }
   }, [])
@@ -234,7 +237,7 @@ const NewNFT = (props: IProps) => {
           </svg>
           <span>{props.power || '0'}</span>
         </Power>
-        <NFTImage imgNo={category} />
+        <NFTImage imgNo={category + 1} />
         <Container>
           <BG2></BG2>
           <Img></Img>

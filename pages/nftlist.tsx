@@ -38,6 +38,7 @@ const Container = styled.div`
 const List = styled.div`
   width: calc(100% + 2.6vw);
   margin-left: -1.3vw;
+  text-align: left;
 `
 const LoadingWrap = styled.div`
   width: 12vw;
@@ -111,10 +112,8 @@ const NFTList = () => {
 
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
-  const [selected, setSelected] = useState<null | {
-    imgNo: number
-    minting: false
-  }>(null)
+  const [selected, setSelected] = useState<null | any>(null)
+  const [nftTokenDetailList, setnftTokenDetailList] = useState<any[]>([])
 
   useEffect(() => {
     ;(async function() {
@@ -132,8 +131,10 @@ const NFTList = () => {
           )
         )
         state.nftTokenDetailList = nftTokenDetailList
+        setnftTokenDetailList(nftTokenDetailList)
         console.log(nftTokenDetailList[0])
       } catch (error) {
+        console.log(error)
       } finally {
         setLoading(false)
       }
@@ -157,11 +158,19 @@ const NFTList = () => {
             <Container>
               <label>NFT list</label>
               <List>
-                {(state.nftTokenDetailList || []).map((nftToken, index) => (
+                {(nftTokenDetailList || []).map((nftToken, index) => (
                   <Wrap
                     key={index}
                     onClick={() => {
-                      setSelected({ imgNo: index + 1, minting: false })
+                      setSelected({
+                        power: nftToken.miningPower,
+                        level: nftToken.quality,
+                        timestamp: nftToken.timestamp,
+                        usd: nftToken.initUSDValue,
+                        minting: false, //@TODO
+                        amount: nftToken.amount,
+                        imgNo: index + 1
+                      })
                       setShowModal(true)
                     }}>
                     <NFTCard
