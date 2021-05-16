@@ -70,7 +70,7 @@ const Title = styled.div`
   opacity: 0;
 `
 const Button = styled.button`
-  width: 15vw;
+  width: 20vw;
   height: 3.5vw;
   background: linear-gradient(90deg, #ed4b8b 0%, #eaa85e 98.88%);
   border: none;
@@ -146,7 +146,7 @@ const Landing = () => {
               <Icon>
                 <Image src='/image/icon-planet.svg' layout='fill' />
               </Icon>
-              <span>Get Started</span>
+              <span>Get Started(BSC)</span>
             </Button>
           </Container>
           <MinterWrap phase={phase} cancel={() => setPhase(1)} />
