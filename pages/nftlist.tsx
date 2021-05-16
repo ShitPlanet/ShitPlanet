@@ -1,3 +1,4 @@
+import { ethers } from 'ethers'
 import { useLocalStore, observer } from 'mobx-react-lite'
 import Background from '@/components/Background'
 import Footer from '@/components/Footer'
@@ -127,9 +128,14 @@ const NFTList = observer(() => {
         console.log('state.nftTokens, ', state.nftTokens)
 
         const nftTokenDetailList = await Promise.all(
-          state.nftTokens.map(nftTokenId =>
-            store.shitboxContract.getBoxInfo(nftTokenId)
-          )
+          state.nftTokens.map(async nftTokenId => {
+            const info = await store.shitboxContract.getBoxInfo(nftTokenId)
+
+            return {
+              ...info,
+              initUSDValue: info.initUSDValue.mul(ethers.BigNumber.from(2))
+            }
+          })
         )
         state.nftTokenDetailList = nftTokenDetailList
         setnftTokenDetailList(nftTokenDetailList)
