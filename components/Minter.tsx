@@ -211,7 +211,7 @@ const Minter = observer((props: IProps) => {
           onClick={() => {
             const max = state.allowance
               .div(ethers.BigNumber.from('1000000000000000000'))
-              .toNumber()
+              ?.toNumber()
             state.setMintValue(max)
           }}>
           MAX
