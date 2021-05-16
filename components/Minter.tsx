@@ -1,5 +1,5 @@
 import { useLocalStore, observer } from 'mobx-react-lite'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 import styled from 'styled-components'
 import Selector from './Selector'
 import { useState, useCallback, useEffect, useMemo } from 'react'
@@ -83,31 +83,40 @@ interface IProps {
 const Minter = observer((props: IProps) => {
   const store = useStore()
 
-  const state = useLocalStore(() => ({
-    shitContract: null,
-    lajiContract: null,
-    disabled: false,
-    setDisabled(value) {
-      this.disabled = value
-    },
-    approved: false,
-    token: null,
-    setToken(value: string) {
-      this.token = value
-    },
-    mintValue: '',
-    setMintValue(value) {
-      this.mintValue = value
-    },
-    allowance: ethers.BigNumber.from(0)
-  }))
+  const [lajiContract, setLajiContract] = useState(null)
+  const [disabled, setDisabled] = useState(false)
+  const [approved, setApproved] = useState(false)
+  const [token, setToken] = useState('')
+  const [mintValue, setMintValue] = useState('')
+  const [allowance, setAllowance] = useState(BigNumber.from('0'))
+
+  // const state = useLocalStore(() => ({
+  //   shitContract: null,
+  //   lajiContract: null,
+  //   disabled: false,
+  //   setDisabled(value) {
+  //     this.disabled = value
+  //   },
+  //   approved: false,
+  //   token: null,
+  //   setToken(value: string) {
+  //     this.token = value
+  //   },
+  //   mintValue: '',
+  //   setMintValue(value) {
+  //     this.mintValue = value
+  //   },
+  //   allowance: ethers.BigNumber.from(0)
+  // }))
 
   const [shitTokenList, setShitTokenList] = useState([])
 
   useEffect(() => {
-    ;(async function() {
+    const func = async () => {
+      console.log(111)
       try {
         const shitTokenAddressList = await store.shitContract.getShitTokenList()
+        console.log(1111)
         const shitTokenList = await Promise.all(
           shitTokenAddressList.map(async address => {
             const thirtyPartyShitContract = new ethers.Contract(
@@ -124,46 +133,50 @@ const Minter = observer((props: IProps) => {
         )
         setShitTokenList(shitTokenList)
         if (shitTokenList[0]) {
-          state.setToken((shitTokenList[0] as any).address)
+          setToken((shitTokenList[0] as any).address)
         }
       } catch (error) {
+        console.log(error)
       } finally {
       }
-    })()
-  }, [store.shitContract, store.provider, store.account])
+    }
+    func()
+  }, [])
 
   // 选中的laji币切换时，重新设置lajiContract、approve、上限状态
   useEffect(() => {
     ;(async function() {
+      if (!token) return
       try {
-        state.lajiContract = new ethers.Contract(
-          state.token,
-          shitAbi,
-          store.signer
-        )
-        const allowance = await state.lajiContract.allowance(
+        console.log(token, shitAbi)
+        const ctt = new ethers.Contract(token, shitAbi)
+        setLajiContract(ctt)
+        const allowance: BigNumber = await ctt.allowance(
           store.account,
           tokenAddress.shitbox
+          // new ethers.providers.Web3Provider(window.ethereum).getSigner()
         )
-        state.allowance = allowance
-        state.approved = allowance.gt(0)
+        setAllowance(allowance)
+        setApproved(!allowance.isZero())
+        // state.allowance = allowance
+        // state.approved = allowance.gt(0)
       } catch (error) {
         console.log(error)
       } finally {
       }
     })()
-  }, [state.token])
+  }, [token])
 
   const approve = useCallback(async () => {
     try {
       props.setLoading(true)
-      const tx = await state.lajiContract.approve(
+      const tx = await lajiContract.approve(
         tokenAddress.shitbox,
         ethers.BigNumber.from('1000000000000000000000000')
       )
 
       await tx.wait()
-      state.approved = true
+      setApproved(true)
     } catch (error) {
       console.log(error)
     } finally {
@@ -175,10 +188,11 @@ const Minter = observer((props: IProps) => {
     try {
       props.setLoading(true)
       const tx = await store.shitboxContract.mintShitBox(
-        state.token,
-        ethers.utils.parseEther(state.mintValue)
+        token,
+        ethers.utils.parseEther(mintValue)
       )
-      await tx.wait()
+      const res = await tx.wait()
+      console.log(res)
       props.setNewlyMinted({ level: 1 })
     } catch (error) {
       console.log(error)
@@ -191,36 +205,36 @@ const Minter = observer((props: IProps) => {
     <Div>
       <InputGroup>
         <input
-          value={state.mintValue}
+          value={mintValue}
           onChange={e => {
-            state.setMintValue(e.target.value)
+            setMintValue(e.target.value)
           }}
           type='number'
           placeholder='Destroyed Quantity'
         />
         <button
           onClick={() => {
-            const max = state.allowance
+            const max = allowance
               .div(ethers.BigNumber.from('1000000000000000000'))
-              .toNumber()
-            state.setMintValue(max)
+              .toString()
+            setMintValue(ethers.utils.formatEther(allowance))
           }}>
           MAX
         </button>
       </InputGroup>
       <Selector
         placeholder=''
-        value={state.token}
+        value={token}
         options={shitTokenList.map((token, index) => ({
           label: token.name,
           value: token.address
         }))}
-        onChange={val => state.setToken(val)}
+        onChange={val => setToken(val)}
       />
       <Button
-        disabled={state.disabled}
+        disabled={disabled}
         onClick={() => {
-          if (!state.approved) {
+          if (!approved) {
             approve()
           } else {
             mint()
@@ -239,7 +253,7 @@ const Minter = observer((props: IProps) => {
             fill='white'
           />
         </svg>
-        {state.approved ? 'Mint NFT' : 'Approve'}
+        {approved ? 'Mint NFT' : 'Approve'}
       </Button>
     </Div>
   )
