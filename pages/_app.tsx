@@ -7,7 +7,7 @@ import Head from 'next/head'
 import { META } from '@/constant'
 import { useStore } from '@/store'
 import { ethers } from 'ethers'
-import address from '@/config/constants/address.json'
+import { tokenAddress } from '@/config/constants/tokenAddres'
 import shitAbi from '@/config/abi/shit.json'
 import shitboxAbi from '@/config/abi/shitbox.json'
 
@@ -41,13 +41,15 @@ const App = observer(function App({ Component, pageProps }: Props) {
         }
         store.provider = new ethers.providers.Web3Provider(ethereum)
         store.signer = store.provider.getSigner()
+        console.log('tokenAddress.shit: ', tokenAddress.shit)
+
         store.shitContract = new ethers.Contract(
-          address.shit,
+          tokenAddress.shit,
           shitAbi,
           store.signer
         )
         store.shitboxContract = new ethers.Contract(
-          address.shitbox,
+          tokenAddress.shitbox,
           shitboxAbi,
           store.signer
         )
