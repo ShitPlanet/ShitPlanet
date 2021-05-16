@@ -22,7 +22,7 @@ const Div = styled.div`
     width: 100%;
     border: none;
     background-color: transparent;
-    padding: 0 2vw;
+    padding: 0 1vw;
     text-align: left;
     font-family: 'Lexend bold';
     font-size: 2.5vw;
@@ -46,6 +46,9 @@ const Div = styled.div`
     margin: 1vw 0;
     opacity: 0.9;
     line-height: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: no-wrap;
   }
   & .options button:first-child {
     margin-top: 0.6vw;
