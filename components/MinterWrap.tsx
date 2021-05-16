@@ -124,7 +124,7 @@ interface IProps {
 }
 const MinterWrap = (props: IProps) => {
   const [loading, setLoading] = useState(false)
-  const [newlyMinted, setNewlyMinted] = useState<null | { level: number }>(null)
+  const [newlyMinted, setNewlyMinted] = useState<null | any>(null)
   return (
     <Wrap className={props.phase === 2 ? 'active' : ''}>
       <Title className={newlyMinted ? 'hidden' : ''}>
@@ -149,7 +149,7 @@ const MinterWrap = (props: IProps) => {
           ) : null}
         </Card>
       )}
-      {newlyMinted ? <NewNFT one={newlyMinted} /> : null}
+      {newlyMinted ? <NewNFT {...newlyMinted} /> : null}
     </Wrap>
   )
 }

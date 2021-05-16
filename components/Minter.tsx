@@ -77,7 +77,7 @@ const Button = styled.button`
 
 interface IProps {
   setLoading: (val: boolean) => void
-  setNewlyMinted: (val: { level: number }) => void
+  setNewlyMinted: (val: any) => void
 }
 
 const Minter = observer((props: IProps) => {

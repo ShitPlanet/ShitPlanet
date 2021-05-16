@@ -140,7 +140,6 @@ const BG2 = styled.div``
 const Img = styled.div``
 
 interface IProps {
-  one: null | { level: number }
   type?: string
   name?: string
   imgNo?: number

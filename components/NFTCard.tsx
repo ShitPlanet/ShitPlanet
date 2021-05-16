@@ -168,6 +168,7 @@ interface IProps {
 const NFTCard = (props: IProps) => {
   const [category, setCategory] = useState(-1)
   const [time, setTime] = useState('')
+  const [powerStr, setPowerStr] = useState('')
   useEffect(() => {
     if (props.timestamp) {
       const date = new Date(props.timestamp?.toNumber() * 1000)
