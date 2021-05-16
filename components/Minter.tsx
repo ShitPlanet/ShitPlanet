@@ -107,7 +107,9 @@ const Minter = observer((props: IProps) => {
   useEffect(() => {
     ;(async function() {
       try {
+        if (!store.shitContract) return
         const shitTokenAddressList = await store.shitContract.getShitTokenList()
+
         const shitTokenList = await Promise.all(
           shitTokenAddressList.map(async address => {
             const thirtyPartyShitContract = new ethers.Contract(
@@ -115,7 +117,8 @@ const Minter = observer((props: IProps) => {
               template,
               store.provider
             )
-            const name = await thirtyPartyShitContract.name()
+            const name = await thirtyPartyShitContract.symbol()
+
             return {
               name,
               address
@@ -127,6 +130,7 @@ const Minter = observer((props: IProps) => {
           state.setToken((shitTokenList[0] as any).address)
         }
       } catch (error) {
+        console.log(error)
       } finally {
       }
     })()
@@ -136,6 +140,7 @@ const Minter = observer((props: IProps) => {
   useEffect(() => {
     ;(async function() {
       try {
+        if (!state.token) return
         state.lajiContract = new ethers.Contract(
           state.token,
           shitAbi,
@@ -156,6 +161,7 @@ const Minter = observer((props: IProps) => {
 
   const approve = useCallback(async () => {
     try {
+      if (!state.lajiContract) return
       props.setLoading(true)
       const tx = await state.lajiContract.approve(
         tokenAddress.shitbox,
@@ -169,7 +175,7 @@ const Minter = observer((props: IProps) => {
     } finally {
       props.setLoading(false)
     }
-  }, [store.shitContract])
+  }, [state.lajiContract])
 
   const mint = useCallback(async () => {
     try {
