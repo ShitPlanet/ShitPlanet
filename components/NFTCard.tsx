@@ -155,7 +155,6 @@ const Upgrade = styled.button`
 `
 
 interface IProps {
-  name: string
   type?: string
   name?: string
   imgNo?: number
