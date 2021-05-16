@@ -179,6 +179,7 @@ const Minter = observer((props: IProps) => {
 
   const mint = useCallback(async () => {
     try {
+      if (!store.shitboxContract) return
       props.setLoading(true)
       const tx = await store.shitboxContract.mintShitBox(
         state.token,
@@ -192,11 +193,22 @@ const Minter = observer((props: IProps) => {
 
       await tx.wait()
 
-      const nftToken = await store.shitboxContract.getBoxInfo('0x3')
+      const tokenList = await store.shitboxContract.tokensOfOwner(store.account)
+      const lastTokenId = tokenList[tokenList.length - 1]
+      console.log(lastTokenId)
+
+      const nftToken = await store.shitboxContract.getBoxInfo(
+        ethers.BigNumber.from(lastTokenId)
+      )
 
       props.setNewlyMinted({
-        level: ethers.BigNumber.from(1),
-        usd: ethers.BigNumber.from(100)
+        power: nftToken.miningPower,
+        level: nftToken.quality,
+        timestamp: nftToken.timestamp,
+        usd: nftToken.initUSDValue,
+        minting: false, //@TODO
+        amount: nftToken.amount,
+        imgNo: tokenList.length
       })
     } catch (error) {
       console.log(error)

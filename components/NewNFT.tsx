@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { ethers } from 'ethers'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import styled, { keyframes } from 'styled-components'
 import Level from './Level'
 import NFTImage from './NFTImage'
@@ -143,10 +143,10 @@ interface IProps {
   type?: string
   name?: string
   imgNo?: number
-  amount?: number
+  amount?: BigNumber
   timestamp?: BigNumber
   usd?: BigNumber
-  power?: number
+  power?: BigNumber
   minting?: boolean
   level?: BigNumber
 }
@@ -199,6 +199,27 @@ const NewNFT = (props: IProps) => {
     { name1: 'AHL No.05', name2: '', image: 'aircraft' },
     { name1: 'Alien shit', name2: '', image: 'shit' }
   ]
+
+  const [powerStr, setPowerStr] = useState('')
+
+  useEffect(() => {
+    const length = props.power.toString().length
+    if (length <= 3) {
+      setPowerStr(props.power.toString())
+    } else if (length > 3 && length <= 6) {
+      setPowerStr(`${props.power.toString().substr(0, length - 3)} K`)
+    } else if (length > 6 && length <= 9) {
+      setPowerStr(`${props.power.toString().substr(0, length - 6)} M`)
+    } else if (length > 9 && length <= 12) {
+      setPowerStr(`${props.power.toString().substr(0, length - 9)} G`)
+    } else if (length > 12 && length <= 15) {
+      setPowerStr(`${props.power.toString().substr(0, length - 12)} T`)
+    } else if (length > 15 && length <= 18) {
+      setPowerStr(`${props.power.toString().substr(0, length - 15)} P`)
+    } else if (length > 18 && length <= 21) {
+      setPowerStr(`${props.power.toString().substr(0, length - 18)} E`)
+    }
+  }, [])
   return (
     <Div href='/nftlist' className={`level_${props.level?.toNumber() || 1}`}>
       <BG1>
@@ -234,7 +255,7 @@ const NewNFT = (props: IProps) => {
               fill='currentColor'
             />
           </svg>
-          <span>{props.power || '0'}</span>
+          <span>{powerStr || '0'}</span>
         </Power>
         <NFTImage imgNo={category + 1} />
         <Container>
