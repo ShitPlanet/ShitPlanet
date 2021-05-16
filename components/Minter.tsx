@@ -67,6 +67,7 @@ const Button = styled.button`
   font-family: 'Lexend';
   font-size: 2.5vw;
   color: #fff;
+  z-index: -10;
   &:hover {
     box-shadow: 0 0 0.5vw #3c92dd;
   }

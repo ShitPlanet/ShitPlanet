@@ -141,8 +141,13 @@ const Upgrade = styled.button`
   font-family: 'Lexend bold';
   color: #fff;
   opacity: 0.8;
+  cursor: not-allowed;
   &:hover {
     opacity: 1;
+  }
+  &:disabled {
+    color: #fff;
+    background-color: transparent !important;
   }
 `
 
@@ -178,7 +183,7 @@ const NFTCard = (props: IProps) => {
         <span>{props.power || '3.01 K'}</span>
       </Power>
       <NFTImage imgNo={props.imgNo} />
-      <Upgrade>UPGRADE</Upgrade>
+      <Upgrade disabled>UPGRADE</Upgrade>
       <Footer>
         <Amount>
           <span className='label'>Burned Amount:</span>
