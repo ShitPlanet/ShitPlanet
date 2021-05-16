@@ -24,9 +24,9 @@ ShitPlanet aims to burn the shit tokens in the community. In order to reward thi
 <img width="1205" alt="截屏2021-05-16 上午9 47 52" src="https://user-images.githubusercontent.com/37820916/118382922-5d982380-b62c-11eb-8edc-c4589858d880.png">
 
 ## Contract Infomation
-- Shit: 0xa63190F5da411fFE60c0a70E9EAc95cCD5e626be
-- ShitBox: 0xe16DE80288618D6c159aDa57E32247114B185aD0
-- Stacking Rewards: 0xd8425024E830Ef5ABF0D45F978Dfec47168d49fA
+- Shit: 0xa63190F5da411fFE60c0a70E9EAc95cCD5e626be (Verified)
+- ShitBox: 0xe16DE80288618D6c159aDa57E32247114B185aD0 (Verified)
+- Stacking Rewards: 0xd8425024E830Ef5ABF0D45F978Dfec47168d49fA (Verified)
 
 ## Token List Support
 - Lowb: 0x843D4a358471547f51534e3e51fae91cb4Dc3F28
