@@ -4,10 +4,9 @@ import styled from 'styled-components'
 import Selector from './Selector'
 import { useState, useCallback, useEffect, useMemo } from 'react'
 import shitAbi from '@/config/abi/shit.json'
-import shitboxAbi from '@/config/abi/shitbox.json'
 import template from '@/config/abi/template.json'
-import address from '@/config/constants/address.json'
 import { useStore } from '@/store'
+import { tokenAddress } from '@/config/constants/tokenAddres'
 
 const Div = styled.div`
   position: relative;
@@ -144,7 +143,7 @@ const Minter = observer((props: IProps) => {
         )
         const allowance = await state.lajiContract.allowance(
           store.account,
-          '0x0E31f19aF16103162401345Af527017F2ef62F59'
+          tokenAddress.shitbox
         )
         state.allowance = allowance
         state.approved = allowance.gt(0)
@@ -159,7 +158,7 @@ const Minter = observer((props: IProps) => {
     try {
       props.setLoading(true)
       const tx = await state.lajiContract.approve(
-        '0x0E31f19aF16103162401345Af527017F2ef62F59',
+        tokenAddress.shitbox,
         ethers.BigNumber.from('1000000000000000000000000')
       )
 
@@ -177,9 +176,7 @@ const Minter = observer((props: IProps) => {
       props.setLoading(true)
       const tx = await store.shitboxContract.mintShitBox(
         state.token,
-        ethers.BigNumber.from(state.mintValue).mul(
-          ethers.BigNumber.from('1000000000000000000')
-        )
+        ethers.utils.parseEther(state.mintValue)
       )
       await tx.wait()
       props.setNewlyMinted({ level: 1 })
