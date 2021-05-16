@@ -125,8 +125,6 @@ const NFTList = observer(() => {
           store.account
         )
 
-        console.log('state.nftTokens, ', state.nftTokens)
-
         const nftTokenDetailList = await Promise.all(
           state.nftTokens.map(async nftTokenId => {
             const info = await store.shitboxContract.getBoxInfo(nftTokenId)
@@ -139,7 +137,6 @@ const NFTList = observer(() => {
         )
         state.nftTokenDetailList = nftTokenDetailList
         setnftTokenDetailList(nftTokenDetailList)
-        console.log(nftTokenDetailList[0])
       } catch (error) {
         console.log(error)
       } finally {

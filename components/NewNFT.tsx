@@ -187,7 +187,6 @@ const NewNFT = (props: IProps) => {
       ) {
         category = 5
       }
-      console.log(category)
       setCategory(category)
     }
   }, [])

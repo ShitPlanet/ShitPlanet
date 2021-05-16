@@ -234,7 +234,6 @@ const NFTCard = observer((props: IProps) => {
       ) {
         category = 5
       }
-      console.log(category)
       setCategory(category)
     }
     if (props.tokenAddress) {
