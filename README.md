@@ -55,9 +55,9 @@ The total mining power across the network and users' personal mining power as we
 
 
 ## Contract Infomation
-- Shit: 0xa63190F5da411fFE60c0a70E9EAc95cCD5e626be (Verified):heavy_check_mark: 
-- ShitBox: 0xe16DE80288618D6c159aDa57E32247114B185aD0 (Verified):heavy_check_mark: 
-- Stacking Rewards: 0xd8425024E830Ef5ABF0D45F978Dfec47168d49fA (Verified):heavy_check_mark: 
+- Shit: [0xa63190F5da411fFE60c0a70E9EAc95cCD5e626be](https://bscscan.com/address/0xa63190F5da411fFE60c0a70E9EAc95cCD5e626be) (Verified):heavy_check_mark: 
+- ShitBox: [0xe16DE80288618D6c159aDa57E32247114B185aD0](https://bscscan.com/address/0xe16DE80288618D6c159aDa57E32247114B185aD0) (Verified):heavy_check_mark: 
+- Stacking Rewards: [0xd8425024E830Ef5ABF0D45F978Dfec47168d49fA](https://bscscan.com/address/0xd8425024E830Ef5ABF0D45F978Dfec47168d49fA) (Verified):heavy_check_mark: 
 
 ## Token List Support
 
