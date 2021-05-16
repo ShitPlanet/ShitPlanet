@@ -19,6 +19,7 @@ const Card1 = styled.div`
   border-radius: 1.3vw;
   background: linear-gradient(225deg, #326aa6 0%, #2b366c 100%);
   padding: 2vw 2.5vw;
+  cursor: default;
 `
 const Card2 = styled.div`
   position: absolute;
@@ -29,6 +30,7 @@ const Card2 = styled.div`
   border-radius: 1.3vw;
   background: linear-gradient(225deg, #32a698 0%, #2b416c 100%);
   padding: 2vw 2.5vw;
+  cursor: default;
 `
 const Card3 = styled.div`
   position: absolute;
@@ -39,6 +41,7 @@ const Card3 = styled.div`
   border-radius: 1.3vw;
   background: linear-gradient(225deg, #cd985a 0%, #3e4c4f 100%);
   padding: 2vw 2.5vw;
+  cursor: default;
 `
 const Label = styled.div`
   font-family: 'Bungee';
@@ -65,6 +68,9 @@ const Button = styled.button`
   color: #fff;
   border: none;
   border-radius: ${(50 * 100) / 1440}vw;
+  &:hover {
+    box-shadow: 0 0 0.5vw #1f6ac2;
+  }
 `
 const Img = styled.div`
   position: absolute;

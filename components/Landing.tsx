@@ -7,10 +7,14 @@ import { useEffect, useState } from 'react'
 import MinterWrap from './MinterWrap'
 import VideoPlayer from './VideoPlayer'
 import Leading from './Leading'
+import classNames from 'classnames'
 
 const Div = styled.div`
   &.blur {
     filter: blur(8px);
+  }
+  &.blur_2 {
+    filter: blur(2px);
   }
 `
 const Main = styled.div`
@@ -123,7 +127,11 @@ const Landing = () => {
 
   return (
     <div>
-      <Div className={playVideo || !leadingInfo ? 'blur' : ''}>
+      <Div
+        className={classNames({
+          blur: playVideo
+          // blur_2: leadingInfo === '0'
+        })}>
         <Header />
         <Main>
           <Background phase={phase} />

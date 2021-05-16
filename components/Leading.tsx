@@ -8,16 +8,16 @@ const Div = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
 `
 const Img = styled.button`
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: 10vw;
+  transform: translateY(-50%);
   cursor: pointer;
-  width: 80vw;
-  height: 42vw;
+  width: 70vw;
+  height: 32vw;
   background-color: #222;
   border: none;
   box-shadow: 0 0 0.5vw rgba(0, 0, 0, #222);
@@ -26,7 +26,7 @@ const Button = styled.button`
   position: fixed;
   width: ${(90 * 100) / 1440}vw;
   height: ${(35 * 100) / 1440}vw;
-  bottom: -5vw;
+  bottom: -3.6vw;
   right: 0;
   border: none;
   border-radius: ${(35 * 100) / 1440}vw;
@@ -43,6 +43,10 @@ const Leading = (props: IProps) => {
   const [step, setStep] = useState(0)
   useEffect(() => {
     if (step === 7) props.skip()
+    document.getElementsByTagName('html')[0].style.overflow = 'hidden'
+    return () => {
+      document.getElementsByTagName('html')[0].style.overflow = 'auto'
+    }
   }, [step])
   return (
     <Div>

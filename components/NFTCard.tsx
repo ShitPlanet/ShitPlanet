@@ -128,6 +128,23 @@ const Power = styled.div`
     color: #fff;
   }
 `
+const Upgrade = styled.button`
+  position: absolute;
+  width: auto;
+  height: auto;
+  top: 28.8vw;
+  right: 2.2vw;
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  font-size: 1.1vw;
+  font-family: 'Lexend bold';
+  color: #fff;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
+`
 
 interface IProps {
   type?: string
@@ -161,9 +178,10 @@ const NFTCard = (props: IProps) => {
         <span>{props.power || '3.01 K'}</span>
       </Power>
       <NFTImage imgNo={props.imgNo} />
+      <Upgrade>UPGRADE</Upgrade>
       <Footer>
         <Amount>
-          <span className='label'>Burn Amount:</span>
+          <span className='label'>Burned Amount:</span>
           <span className='stk'>{props.amount || '201511111135.2468'} STK</span>
           <span className='usd'>≈ {props.usd || '53.0576'} USD</span>
         </Amount>
