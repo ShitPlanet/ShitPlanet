@@ -191,7 +191,7 @@ const Minter = observer((props: IProps) => {
       )
 
       await tx.wait()
-      props.setNewlyMinted({ level: 1 })
+      // props.setNewlyMinted({ })
     } catch (error) {
       console.log(error)
     } finally {
