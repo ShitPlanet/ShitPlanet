@@ -184,7 +184,10 @@ const Minter = observer((props: IProps) => {
         state.token,
         ethers.BigNumber.from(state.mintValue).mul(
           ethers.BigNumber.from('1000000000000000000')
-        )
+        ),
+        {
+          gasLimit: ethers.BigNumber.from(1500000)
+        }
       )
 
       await tx.wait()
