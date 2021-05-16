@@ -56,25 +56,10 @@ const InputGroup = styled.div`
     color: #fff;
   }
 `
-const Price = styled.div`
-  text-align: left;
-  padding-top: ${(113 * 100) / 1440}vw;
-  font-family: 'IBMPlexSans';
-  font-size: 1.6vw;
-  color: #fff;
-  cursor: default;
-`
-const Expect = styled.div`
-  text-align: left;
-  padding-top: ${(11 * 100) / 1440}vw;
-  font-family: 'IBMPlexSans';
-  font-size: 1.6vw;
-  color: #fff;
-  cursor: default;
-`
 const Button = styled.button`
-  float: right;
-  margin-top: ${(160 * 100) / 1440}vw;
+  position: absolute;
+  right: 0;
+  bottom: 0;
   width: ${(300 * 100) / 1440}vw;
   height: ${(80 * 100) / 1440}vw;
   border: none;
@@ -83,6 +68,9 @@ const Button = styled.button`
   font-family: 'Lexend';
   font-size: 2.5vw;
   color: #fff;
+  &:hover {
+    box-shadow: 0 0 0.5vw #3c92dd;
+  }
   & svg {
     margin-right: 1.3vw;
   }

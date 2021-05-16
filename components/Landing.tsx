@@ -83,6 +83,7 @@ const Button = styled.button`
   color: #fff;
   &:hover {
     text-decoration: none;
+    box-shadow: 0 0 0.5vw #ed4b8b;
   }
 `
 const Icon = styled.div`

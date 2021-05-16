@@ -46,7 +46,7 @@ const Card = styled.div`
   box-sizing: border-box;
   position: relative;
   width: 100%;
-  height: 27.6vw;
+  height: 26.6vw;
   background: linear-gradient(225deg, #326aa6 0%, #2b366c 100%);
   border-radius: 1.3vw;
   opacity: 0;
@@ -61,7 +61,7 @@ const Card = styled.div`
 const Button = styled.button`
   position: absolute;
   left: 5.1vw;
-  bottom: 2.8vw;
+  bottom: 3.6vw;
   font-family: 'IBMPlexSans bold';
   font-size: 2.2vw;
   color: #8eb8e4;
