@@ -1,4 +1,4 @@
-import { useLocalStore } from 'mobx-react-lite'
+import { useLocalStore, observer } from 'mobx-react-lite'
 import Background from '@/components/Background'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
@@ -102,7 +102,7 @@ const Btn = styled.div`
   }
 `
 
-const NFTList = () => {
+const NFTList = observer(() => {
   const store = useStore()
 
   const state = useLocalStore(() => ({
@@ -118,7 +118,8 @@ const NFTList = () => {
   useEffect(() => {
     ;(async function() {
       try {
-        if (!store.shitboxContract) return
+        if (!store.shitboxContract || !store.account) return
+
         state.nftTokens = await store.shitboxContract.tokensOfOwner(
           store.account
         )
@@ -218,6 +219,5 @@ const NFTList = () => {
       ) : null}
     </div>
   )
-}
-
+})
 export default NFTList
