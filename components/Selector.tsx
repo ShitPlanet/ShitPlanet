@@ -14,6 +14,7 @@ const Div = styled.div`
   border: 2px solid rgba(255, 255, 255, 0.77);
   border-radius: 0.3vw;
   background: linear-gradient(225deg, #326aa6 0%, #2b366c 100%);
+  z-index: 1000;
   &.show {
     border-color: #bcffce;
   }
