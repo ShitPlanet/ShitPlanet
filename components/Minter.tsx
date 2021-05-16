@@ -191,7 +191,13 @@ const Minter = observer((props: IProps) => {
       )
 
       await tx.wait()
-      // props.setNewlyMinted({ })
+
+      const nftToken = await store.shitboxContract.getBoxInfo('0x3')
+
+      props.setNewlyMinted({
+        level: ethers.BigNumber.from(1),
+        usd: ethers.BigNumber.from(100)
+      })
     } catch (error) {
       console.log(error)
     } finally {
