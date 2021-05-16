@@ -127,7 +127,7 @@ const Footer = () => {
             <Image src='/image/logo2.svg' layout='fill' />
           </Brand>
           <Links>
-            <Link href='https://t.me/joinchat/eIXOqWflKhgwZWU1' target='_blank'>
+            <Link href='https://t.me/shitplanet' target='_blank'>
               <FontAwesomeIcon icon={faTelegramPlane} />
             </Link>
             <Link href='https://twitter.com/shitplanetsaver' target='_blank'>

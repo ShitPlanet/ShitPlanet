@@ -1,3 +1,5 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import Level from './Level'
 import NFTImage from './NFTImage'
@@ -142,12 +144,59 @@ interface IProps {
   name?: string
   imgNo?: number
   amount?: number
-  timestampt?: number
-  usd?: number
+  timestamp?: number
+  usd?: BigNumber
   power?: number
   minting?: boolean
+  level?: BigNumber
 }
 const NewNFT = (props: IProps) => {
+  const [category, setCategory] = useState(-1)
+  useEffect(() => {
+    if (props.usd) {
+      let category: number
+      if (
+        props.usd.gt(BigNumber.from('0')) &&
+        props.usd.lte(BigNumber.from('10'))
+      ) {
+        category = 0
+      } else if (
+        props.usd.gt(BigNumber.from('10')) &&
+        props.usd.lte(BigNumber.from('100'))
+      ) {
+        category = 1
+      } else if (
+        props.usd.gt(BigNumber.from('100')) &&
+        props.usd.lte(BigNumber.from('1000'))
+      ) {
+        category = 2
+      } else if (
+        props.usd.gt(BigNumber.from('1000')) &&
+        props.usd.lte(BigNumber.from('10000'))
+      ) {
+        category = 3
+      } else if (
+        props.usd.gt(BigNumber.from('10000')) &&
+        props.usd.lte(BigNumber.from('100000'))
+      ) {
+        category = 4
+      } else if (
+        props.usd.gt(BigNumber.from('0')) &&
+        props.usd.lte(BigNumber.from('10'))
+      ) {
+        category = 5
+      }
+      setCategory(category)
+    }
+  }, [])
+  const arr = [
+    { name1: 'AHL No.02', name2: '', image: 'ufo' },
+    { name1: 'Alien Skull', name2: '', image: 'skull' },
+    { name1: 'Pistol', name2: 'Antenna', image: 'gun' },
+    { name1: 'Counterfeit', name2: 'Skull', image: 'bottle' },
+    { name1: 'AHL No.05', name2: '', image: 'aircraft' },
+    { name1: 'Alien shit', name2: '', image: 'shit' }
+  ]
   return (
     <Div href='/nftlist' className={`level_${props.one.level}`}>
       <BG1>
@@ -166,8 +215,8 @@ const NewNFT = (props: IProps) => {
       <Card>
         <Header>
           <Text>
-            <span>{props.type || 'Alienware'}</span>
-            <span>{props.name || 'AHL No.02'}</span>
+            <span>{arr[category].name1 || ''}</span>
+            <span>{arr[category].name2 || ''}</span>
           </Text>
           <Level level={props.one.level} />
         </Header>
@@ -185,7 +234,7 @@ const NewNFT = (props: IProps) => {
           </svg>
           <span>{props.power || '0'}</span>
         </Power>
-        <NFTImage imgNo={3} />
+        <NFTImage imgNo={category} />
         <Container>
           <BG2></BG2>
           <Img></Img>

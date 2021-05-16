@@ -1,3 +1,6 @@
+import { BigNumber } from '@ethersproject/bignumber'
+import { ethers } from 'ethers'
+import { useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import Level from './Level'
 import NFTImage from './NFTImage'
@@ -156,20 +159,73 @@ interface IProps {
   name?: string
   imgNo?: number
   amount?: number
-  timestampt?: number
-  usd?: number
+  timestamp?: number
+  usd?: BigNumber
   power?: number
   minting?: boolean
+  level?: BigNumber
 }
 const NFTCard = (props: IProps) => {
+  const [category, setCategory] = useState(-1)
+  const [time, setTime] = useState('')
+  useEffect(() => {
+    if (props.timestamp) {
+      const date = new Date(props.timestamp)
+      const str = `${date.getMonth()} ${date.getDate()}, ${date.getFullYear()}`
+      setTime(str)
+    }
+    if (props.usd) {
+      let category: number
+      if (
+        props.usd.gt(BigNumber.from('0')) &&
+        props.usd.lte(BigNumber.from('10'))
+      ) {
+        category = 0
+      } else if (
+        props.usd.gt(BigNumber.from('10')) &&
+        props.usd.lte(BigNumber.from('100'))
+      ) {
+        category = 1
+      } else if (
+        props.usd.gt(BigNumber.from('100')) &&
+        props.usd.lte(BigNumber.from('1000'))
+      ) {
+        category = 2
+      } else if (
+        props.usd.gt(BigNumber.from('1000')) &&
+        props.usd.lte(BigNumber.from('10000'))
+      ) {
+        category = 3
+      } else if (
+        props.usd.gt(BigNumber.from('10000')) &&
+        props.usd.lte(BigNumber.from('100000'))
+      ) {
+        category = 4
+      } else if (
+        props.usd.gt(BigNumber.from('0')) &&
+        props.usd.lte(BigNumber.from('10'))
+      ) {
+        category = 5
+      }
+      setCategory(category)
+    }
+  }, [])
+  const arr = [
+    { name1: 'AHL No.02', name2: '', image: 'ufo' },
+    { name1: 'Alien Skull', name2: '', image: 'skull' },
+    { name1: 'Pistol', name2: 'Antenna', image: 'gun' },
+    { name1: 'Counterfeit', name2: 'Skull', image: 'bottle' },
+    { name1: 'AHL No.05', name2: '', image: 'aircraft' },
+    { name1: 'Alien shit', name2: '', image: 'shit' }
+  ]
   return (
     <Div id='NFTCard'>
       <Header>
         <Text>
-          <span>{props.type || 'Alienware'}</span>
-          <span>{props.name || 'AHL No.02'}</span>
+          <span>{arr[category].name1 || ''}</span>
+          <span>{arr[category].name2 || ''}</span>
         </Text>
-        <Level level={1} />
+        <Level level={props.level.toNumber()} />
       </Header>
       <Power className={props.minting ? 'minting' : ''}>
         <svg viewBox='0 0 60 59' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -180,19 +236,23 @@ const NFTCard = (props: IProps) => {
             fill='currentColor'
           />
         </svg>
-        <span>{props.power || '3.01 K'}</span>
+        <span>{props.power.toString() || '3.01 K'}</span>
       </Power>
-      <NFTImage imgNo={props.imgNo} />
+      <NFTImage imgNo={category} />
       <Upgrade disabled>UPGRADE</Upgrade>
       <Footer>
         <Amount>
           <span className='label'>Burned Amount:</span>
-          <span className='stk'>{props.amount || '201511111135.2468'} STK</span>
-          <span className='usd'>≈ {props.usd || '53.0576'} USD</span>
+          <span className='stk'>
+            {ethers.utils.formatEther(props.amount) || ''} STK
+          </span>
+          <span className='usd'>
+            ≈ {ethers.utils.formatEther(props.usd) || ''} USD
+          </span>
         </Amount>
         <Time>
           <span className='label'>Burned Time:</span>
-          <span className='time'>May 15, 2021</span>
+          <span className='time'>{time}</span>
         </Time>
       </Footer>
     </Div>

@@ -157,7 +157,7 @@ const NFTList = () => {
             <Container>
               <label>NFT list</label>
               <List>
-                {state.nftTokenDetailList.map((nftToken, index) => (
+                {(state.nftTokenDetailList || []).map((nftToken, index) => (
                   <Wrap
                     key={index}
                     onClick={() => {
@@ -168,7 +168,7 @@ const NFTList = () => {
                       {...{
                         power: nftToken.miningPower,
                         level: nftToken.quality,
-                        timestampt: nftToken.timestamp,
+                        timestamp: nftToken.timestamp,
                         usd: nftToken.initUSDValue,
                         minting: false, //@TODO
                         amount: nftToken.amount,
