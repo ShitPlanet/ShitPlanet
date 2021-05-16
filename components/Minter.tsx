@@ -86,10 +86,6 @@ const Minter = observer((props: IProps) => {
   const state = useLocalStore(() => ({
     shitContract: null,
     lajiContract: null,
-    disabled: false,
-    setDisabled(value) {
-      this.disabled = value
-    },
     approved: false,
     token: null,
     setToken(value: string) {
@@ -192,8 +188,8 @@ const Minter = observer((props: IProps) => {
       props.setLoading(true)
       const tx = await store.shitboxContract.mintShitBox(
         state.token,
-        ethers.BigNumber.from(state.mintValue).mul(
-          ethers.BigNumber.from('1000000000000000000')
+        ethers.BigNumber.from(Number(state.mintValue) * 1000).mul(
+          ethers.BigNumber.from('1000000000000000')
         ),
         {
           gasLimit: ethers.BigNumber.from(1500000)
@@ -254,7 +250,6 @@ const Minter = observer((props: IProps) => {
         onChange={val => state.setToken(val)}
       />
       <Button
-        disabled={state.disabled}
         onClick={() => {
           if (!state.approved) {
             approve()
