@@ -105,7 +105,8 @@ const NFTList = () => {
   const store = useStore()
 
   const state = useLocalStore(() => ({
-    nftTokens: []
+    nftTokens: [],
+    nftTokenDetailList: []
   }))
 
   const [loading, setLoading] = useState(true)
@@ -122,12 +123,22 @@ const NFTList = () => {
         state.nftTokens = await store.shitboxContract.tokensOfOwner(
           store.account
         )
+
+        console.log('state.nftTokens, ', state.nftTokens)
+
+        const nftTokenDetailList = await Promise.all(
+          state.nftTokens.map(nftTokenId =>
+            store.shitboxContract.getBoxInfo(nftTokenId)
+          )
+        )
+        state.nftTokenDetailList = nftTokenDetailList
+        console.log(nftTokenDetailList[0])
       } catch (error) {
       } finally {
         setLoading(false)
       }
     })()
-  }, [store.shitboxContract])
+  }, [store.shitboxContract, store.account])
 
   return (
     <div>
@@ -146,18 +157,26 @@ const NFTList = () => {
             <Container>
               <label>NFT list</label>
               <List>
-                {Array(6)
-                  .fill('1')
-                  .map((i, index) => (
-                    <Wrap
-                      key={index}
-                      onClick={() => {
-                        setSelected({ imgNo: index + 1, minting: false })
-                        setShowModal(true)
-                      }}>
-                      <NFTCard {...{ imgNo: index + 1 }} />
-                    </Wrap>
-                  ))}
+                {state.nftTokenDetailList.map((nftToken, index) => (
+                  <Wrap
+                    key={index}
+                    onClick={() => {
+                      setSelected({ imgNo: index + 1, minting: false })
+                      setShowModal(true)
+                    }}>
+                    <NFTCard
+                      {...{
+                        power: nftToken.miningPower,
+                        level: nftToken.quality,
+                        timestampt: nftToken.timestamp,
+                        usd: nftToken.initUSDValue,
+                        minting: false, //@TODO
+                        amount: nftToken.amount,
+                        imgNo: index + 1
+                      }}
+                    />
+                  </Wrap>
+                ))}
               </List>
             </Container>
           )}
