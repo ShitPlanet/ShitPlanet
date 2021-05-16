@@ -58,11 +58,19 @@ The total mining power across the network and users' personal mining power as we
 - Shit: 0xa63190F5da411fFE60c0a70E9EAc95cCD5e626be (Verified):heavy_check_mark: 
 - ShitBox: 0xe16DE80288618D6c159aDa57E32247114B185aD0 (Verified):heavy_check_mark: 
 - Stacking Rewards: 0xd8425024E830Ef5ABF0D45F978Dfec47168d49fA (Verified):heavy_check_mark: 
+
 ## Token List Support
+
 - Lowb: 0x843D4a358471547f51534e3e51fae91cb4Dc3F28
-  - Bridge: 0x55d398326f99059fF775485246999027B3197955
 - PIG: 0x8850D2c68c632E3B258e612abAA8FadA7E6958E5
-  - Bridge:0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c
+- ASS: 0x7c63f96feafacd84e75a594c00fac3693386fbf0 
+- SCB: 0xdcaf1afc07d9e1c057bd5cd144659910c4b91682 
+- Saob: 0xE7668E6465680021136B7BBCDAa463702BD7F668 
+- Doge: 0xbA2aE424d960c26247Dd6c32edC70B295c744C43 
+- BNBMoon: 0xCCfeCD47271dCD25499B720b88A53191fe93Dee2 
+- DOC: 0x31C89b875Cbb84e39ca5c30d4347EE662B50210f 
+- JBM: 0x1E4EaD1cc0604C1bB1bBE6AaeeE2be563c4C95aE 
+- More coming soon
 
 
 
