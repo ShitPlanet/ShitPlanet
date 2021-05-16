@@ -88,6 +88,14 @@ const Header = () => {
         if (accounts[0]) {
           store.setAccount(accounts[0])
         }
+        setInterval(async () => {
+          const accounts = await ethereum.request({
+            method: 'eth_requestAccounts'
+          })
+          if (store.account && accounts[0] !== store.account) {
+            window.location.reload()
+          }
+        }, 100)
       } finally {
         setDisabled(false)
       }
@@ -143,7 +151,7 @@ const Header = () => {
     const ethereum = (window as any)?.ethereum
     if (ethereum === undefined) return
     ;(async function() {
-      ethereum.on('chainChanged', _chainId => {
+      ethereum.on('chainChanged', () => {
         window.location.reload()
       })
     })()
