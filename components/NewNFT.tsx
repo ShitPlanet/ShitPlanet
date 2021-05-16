@@ -215,8 +215,8 @@ const NewNFT = (props: IProps) => {
       <Card>
         <Header>
           <Text>
-            <span>{arr[category].name1 || ''}</span>
-            <span>{arr[category].name2 || ''}</span>
+            <span>{arr[category]?.name1 || ''}</span>
+            <span>{arr[category]?.name2 || ''}</span>
           </Text>
           <Level level={props.one.level} />
         </Header>

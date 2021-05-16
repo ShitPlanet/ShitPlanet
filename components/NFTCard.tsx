@@ -222,8 +222,8 @@ const NFTCard = (props: IProps) => {
     <Div id='NFTCard'>
       <Header>
         <Text>
-          <span>{arr[category].name1 || ''}</span>
-          <span>{arr[category].name2 || ''}</span>
+          <span>{arr[category]?.name1 || ''}</span>
+          <span>{arr[category]?.name2 || ''}</span>
         </Text>
         <Level level={props.level.toNumber()} />
       </Header>
