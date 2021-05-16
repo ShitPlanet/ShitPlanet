@@ -41,7 +41,6 @@ const App = observer(function App({ Component, pageProps }: Props) {
         }
         store.provider = new ethers.providers.Web3Provider(ethereum)
         store.signer = store.provider.getSigner()
-        console.log('tokenAddress.shit: ', tokenAddress.shit)
 
         store.shitContract = new ethers.Contract(
           tokenAddress.shit,
