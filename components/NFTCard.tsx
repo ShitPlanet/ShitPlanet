@@ -173,8 +173,19 @@ const NFTCard = (props: IProps) => {
     if (props.power) {
       const length = props.power.toString().length
       if (length <= 3) {
-      }
-      if (length > 3 && length) {
+        setPowerStr(props.power.toString())
+      } else if (length > 3 && length <= 6) {
+        setPowerStr(`${props.power.toString().substr(0, length - 3)} K`)
+      } else if (length > 6 && length <= 9) {
+        setPowerStr(`${props.power.toString().substr(0, length - 6)} M`)
+      } else if (length > 9 && length <= 12) {
+        setPowerStr(`${props.power.toString().substr(0, length - 9)} G`)
+      } else if (length > 12 && length <= 15) {
+        setPowerStr(`${props.power.toString().substr(0, length - 12)} T`)
+      } else if (length > 15 && length <= 18) {
+        setPowerStr(`${props.power.toString().substr(0, length - 15)} P`)
+      } else if (length > 18 && length <= 21) {
+        setPowerStr(`${props.power.toString().substr(0, length - 18)} E`)
       }
     }
     if (props.timestamp) {
@@ -247,7 +258,7 @@ const NFTCard = (props: IProps) => {
             fill='currentColor'
           />
         </svg>
-        <span>{props.power?.toString() || '3.01 K'}</span>
+        <span>{powerStr || '3.01 K'}</span>
       </Power>
       <NFTImage imgNo={category + 1} />
       <Upgrade disabled>UPGRADE</Upgrade>
