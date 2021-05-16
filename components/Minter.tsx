@@ -210,7 +210,7 @@ const Minter = observer((props: IProps) => {
         power: nftToken.miningPower,
         level: nftToken.quality,
         timestamp: nftToken.timestamp,
-        usd: nftToken.initUSDValue,
+        usd: nftToken.initUSDValue.mul(ethers.BigNumber.from(2)),
         minting: false, //@TODO
         amount: nftToken.amount,
         imgNo: tokenList.length
