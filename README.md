@@ -7,21 +7,26 @@
 ShitPlanet aims to burn the shit tokens in the community. In order to reward this purification behavior, we will grant users a limited edition NFT, and users can participate in farming our platform tokens through the NFT power and use our platform tokens to join the democratic governance to build a clean and positive community.
 
 
-## Demo ScreenShot
+## Features
 
-### Minting
-<img width="902" alt="截屏2021-05-16 上午9 49 30" src="https://user-images.githubusercontent.com/37820916/118382860-0db95c80-b62c-11eb-9cd0-803f84f1d3c7.png">
+### Minting NFT
+<img width="600" alt="截屏2021-05-16 上午9 49 30" src="https://user-images.githubusercontent.com/37820916/118382860-0db95c80-b62c-11eb-9cd0-803f84f1d3c7.png">
+50% 25% 25%
 
 ### NFT Lists
 <img width="599" alt="截屏2021-05-16 上午9 52 32" src="https://user-images.githubusercontent.com/37820916/118382974-9506d000-b62c-11eb-9241-9ae82a0b7e2b.png">
+Rank
+Mining Power
+Upgrade
 
 ### NFT Stake Mining
+<img width="600" alt="截屏2021-05-16 上午9 51 02" src="https://user-images.githubusercontent.com/37820916/118382893-42c5af00-b62c-11eb-979b-1ae9dca4c6c1.png">
 
-<img width="935" alt="截屏2021-05-16 上午9 51 02" src="https://user-images.githubusercontent.com/37820916/118382893-42c5af00-b62c-11eb-979b-1ae9dca4c6c1.png">
 
 ### Reward Redeem
-
-<img width="1205" alt="截屏2021-05-16 上午9 47 52" src="https://user-images.githubusercontent.com/37820916/118382922-5d982380-b62c-11eb-8edc-c4589858d880.png">
+<img width="900" alt="截屏2021-05-16 上午9 47 52" src="https://user-images.githubusercontent.com/37820916/118382922-5d982380-b62c-11eb-8edc-c4589858d880.png">
+dashboard
+redeem
 
 ## Contract Infomation
 - Shit: 0xa63190F5da411fFE60c0a70E9EAc95cCD5e626be (Verified):heavy_check_mark: 
