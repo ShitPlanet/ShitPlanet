@@ -1,9 +1,12 @@
+import { observer } from 'mobx-react-lite'
 import { BigNumber } from '@ethersproject/bignumber'
 import { ethers, utils } from 'ethers'
 import { useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import Level from './Level'
 import NFTImage from './NFTImage'
+import { useStore } from '@/store'
+import shitAbi from '@/config/abi/shit.json'
 
 const Div = styled.div`
   position: relative;
@@ -156,7 +159,7 @@ const Upgrade = styled.button`
 
 interface IProps {
   type?: string
-  name?: string
+  tokenAddress?: string
   imgNo?: number
   amount?: number
   timestamp?: BigNumber
@@ -165,10 +168,13 @@ interface IProps {
   minting?: boolean
   level?: BigNumber
 }
-const NFTCard = (props: IProps) => {
+const NFTCard = observer((props: IProps) => {
+  const store = useStore()
   const [category, setCategory] = useState(-1)
   const [time, setTime] = useState('')
   const [powerStr, setPowerStr] = useState('')
+  const [tokenSymbol, setTokenSymbol] = useState('')
+
   useEffect(() => {
     if (props.power) {
       const length = props.power.toString().length
@@ -231,6 +237,16 @@ const NFTCard = (props: IProps) => {
       console.log(category)
       setCategory(category)
     }
+    if (props.tokenAddress) {
+      const lajiContract = new ethers.Contract(
+        props.tokenAddress,
+        shitAbi,
+        store.signer
+      )
+      lajiContract.symbol().then(name => {
+        setTokenSymbol(name)
+      })
+    }
   }, [])
   const arr = [
     { name1: 'AHL No.02', name2: '', image: 'ufo' },
@@ -266,7 +282,7 @@ const NFTCard = (props: IProps) => {
         <Amount>
           <span className='label'>Burned Amount:</span>
           <span className='stk'>
-            {ethers.utils.formatEther(props.amount) || ''} {props.name || ''}
+            {ethers.utils.formatEther(props.amount) || ''} {tokenSymbol || ''}
           </span>
           <span className='usd'>
             ≈ {ethers.utils.formatEther(props.usd) || ''} USD
@@ -279,6 +295,5 @@ const NFTCard = (props: IProps) => {
       </Footer>
     </Div>
   )
-}
-
+})
 export default NFTCard

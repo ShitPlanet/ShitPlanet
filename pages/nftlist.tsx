@@ -176,6 +176,7 @@ const NFTList = observer(() => {
                     }}>
                     <NFTCard
                       {...{
+                        tokenAddress: nftToken.tokenAddress,
                         power: nftToken.miningPower,
                         level: nftToken.quality,
                         timestamp: nftToken.timestamp,
