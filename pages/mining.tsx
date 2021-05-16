@@ -88,16 +88,16 @@ const Mining = () => {
       <Main>
         <Background phase={4} />
         <Card1>
-          <Label>Total Hash Power</Label>
-          <Span>8'765'114'312'151</Span>
+          <Label>Total Mining Power</Label>
+          <Span>1'761</Span>
         </Card1>
         <Card2>
           <Label>my Hash Power</Label>
-          <Span>312'151</Span>
+          <Span>100</Span>
         </Card2>
         <Card3>
-          <Label>shit token i've minted</Label>
-          <Span>4'312'151</Span>
+          <Label>shit token i've earned</Label>
+          <Span>10</Span>
         </Card3>
         <Button>Claim your shit coins</Button>
         <Img>
