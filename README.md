@@ -73,7 +73,12 @@ The total mining power across the network and users' personal mining power as we
 - JBM: 0x1E4EaD1cc0604C1bB1bBE6AaeeE2be563c4C95aE 
 - More coming soon
 
+## Community Channels
 
+- [Twitter](https://twitter.com/shitplanetsaver)
+- [Discord](https://discord.com/invite/pfWmc6m2)
+- [Telegram](https://t.me/shitplanet)
+- [Airdrop Sheet](https://docs.google.com/forms/d/e/1FAIpQLSed3I5srjb0g0rjbPT4QB9bUlDubHGSTHenQ0qbH11Kvrv0Dw/viewform)
 
 
 

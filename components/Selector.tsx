@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 import { useEffect, useRef, useState, useMemo } from 'react'
 
+var swapItem = function(arr, fromIndex, toIndex) {
+  arr[toIndex] = arr.splice(fromIndex, 1, arr[toIndex])[0]
+  return arr
+}
+
 const Div = styled.div`
   position: absolute;
   top: 0;
@@ -92,7 +97,20 @@ const Selector = (props: IProps) => {
   }, [props.value])
 
   const calculatedOptions = useMemo(() => {
-    return props.options.filter(item => item.value !== props.value)
+    // lowb, doge, wbnb
+
+    let temp = props.options.filter(item => item.value !== props.value)
+
+    const dogeIndex = temp.findIndex(item => item.label === 'DOGE')
+    if (dogeIndex > 0) {
+      temp[0] = temp.splice(dogeIndex, 1, temp[0])[0]
+    }
+    const wbnbIndex = temp.findIndex(item => item.label === 'WBNB')
+    if (wbnbIndex > 0) {
+      temp[1] = temp.splice(wbnbIndex, 1, temp[1])[0]
+    }
+
+    return temp
   }, [props.options, props.value])
 
   return (
