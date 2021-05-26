@@ -124,7 +124,7 @@ const Footer = () => {
       <div>
         <Container1>
           <Brand>
-            <Image src='/image/logo2.svg' layout='fill' />
+            <img src='/image/logo2.svg' style={{ objectFit: 'cover' }} />
           </Brand>
           <Links>
             <Link href='https://t.me/shitplanet' target='_blank'>
@@ -153,13 +153,13 @@ const Footer = () => {
           <Wrap2>
             <div>
               {/* <Img>
-                <Image src='/image/icon-phone.svg' layout='fill' />
+                <img src='/image/icon-phone.svg' style={{ objectFit: 'cover' }} />
               </Img>
               <span>(+86)183-3920-9433</span> */}
             </div>
             <div>
               {/* <Img>
-                <Image src='/image/icon-mail.svg' layout='fill' />
+                <img src='/image/icon-mail.svg' style={{ objectFit: 'cover' }} />
               </Img>
               <span>Contact@shitplanet.world</span> */}
             </div>
@@ -167,7 +167,7 @@ const Footer = () => {
           <Wrap2>
             <div>
               {/* <Img>
-                <Image src='/image/icon-map-maker.svg' layout='fill' />
+                <img src='/image/icon-map-maker.svg' style={{ objectFit: 'cover' }} />
               </Img>
               <span>(+86)183-3920-9433</span> */}
             </div>

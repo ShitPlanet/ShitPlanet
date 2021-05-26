@@ -101,7 +101,7 @@ const Mining = () => {
         </Card3>
         <Button>Claim your shit coins</Button>
         <Img>
-          <Image src='/image/ufo.svg' layout='fill' />
+          <img src='/image/ufo.svg' style={{ objectFit: 'cover' }} />
         </Img>
       </Main>
       <Footer />

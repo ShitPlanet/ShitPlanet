@@ -144,14 +144,17 @@ const Landing = () => {
               id='leading_target_1'
               onClick={() => setPhase(phase === 1 ? 2 : 1)}>
               <Icon>
-                <Image src='/image/icon-planet.svg' layout='fill' />
+                <img
+                  src='/image/icon-planet.svg'
+                  style={{ objectFit: 'cover' }}
+                />
               </Icon>
               <span>Get Started(BSC)</span>
             </Button>
           </Container>
           <MinterWrap phase={phase} cancel={() => setPhase(1)} />
           <Img className={phase === 2 ? 'left' : ''}>
-            <Image src='/image/ufo.svg' layout='fill' />
+            <img src='/image/ufo.svg' style={{ objectFit: 'cover' }} />
           </Img>
         </Main>
         <Footer />

@@ -9,10 +9,10 @@ const MovingStars = () => {
   return (
     <Container>
       <Wrap1>
-        <Image src='/image/stars.svg' layout='fill' />
+        <img src='/image/stars.svg' style={{ objectFit: 'cover' }} />
       </Wrap1>
       <Wrap2>
-        <Image src='/image/stars.svg' layout='fill' />
+        <img src='/image/stars.svg' style={{ objectFit: 'cover' }} />
       </Wrap2>
     </Container>
   )

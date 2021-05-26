@@ -157,19 +157,19 @@ const Background = (props: IProps) => {
       {/* {props.phase === 3 ? <Div></Div> : <Stars ref={dom}></Stars>} */}
       {props.phase === 3 ? null : (
         <Img1>
-          <Image src='/image/aircraft.svg' layout='fill' />
+          <img src='/image/aircraft.svg' style={{ objectFit: 'cover' }} />
         </Img1>
       )}
       <Img3>
-        <Image src='/image/sun.svg' layout='fill' />
+        <img src='/image/sun.svg' style={{ objectFit: 'cover' }} />
       </Img3>
       {props.phase === 3 ? null : (
         <Img4>
-          <Image src='/image/saturn.svg' layout='fill' />
+          <img src='/image/saturn.svg' style={{ objectFit: 'cover' }} />
         </Img4>
       )}
       <Img5>
-        <Image src='/image/moon.svg' layout='fill' />
+        <img src='/image/moon.svg' style={{ objectFit: 'cover' }} />
       </Img5>
     </Wrap>
   )

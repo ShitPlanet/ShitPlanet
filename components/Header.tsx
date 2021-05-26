@@ -162,10 +162,10 @@ const Header = () => {
       <Container>
         <Brand href='/'>
           <ImgWrap>
-            <Image src='/image/brand.svg' layout='fill' />
+            <img src='/image/brand.svg' style={{ objectFit: 'cover' }} />
           </ImgWrap>
           <Name>
-            <Image src='/image/logo.svg' layout='fill' />
+            <img src='/image/logo.svg' style={{ objectFit: 'cover' }} />
           </Name>
         </Brand>
         <Nav>

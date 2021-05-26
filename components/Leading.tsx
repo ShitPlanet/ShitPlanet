@@ -51,7 +51,9 @@ const Leading = (props: IProps) => {
   return (
     <Div>
       <Img onClick={() => setStep(step + 1)}>
-        {step === 0 ? <Image src='/image/step1.svg' layout='fill' /> : null}
+        {step === 0 ? (
+          <img src='/image/step1.svg' style={{ objectFit: 'cover' }} />
+        ) : null}
         <Button onClick={props.skip}>SKIP</Button>
       </Img>
     </Div>

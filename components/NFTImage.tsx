@@ -48,18 +48,24 @@ interface ImageProps {
 const NFTImage = (props: ImageProps) => {
   return (
     <ImageDiv className={`no_${props.imgNo}`}>
-      {props.imgNo === 1 ? <Image src='/image/ufo.svg' layout='fill' /> : null}
-      {props.imgNo === 2 ? (
-        <Image src='/image/skull.svg' layout='fill' />
+      {props.imgNo === 1 ? (
+        <img src='/image/ufo.svg' style={{ objectFit: 'cover' }} />
       ) : null}
-      {props.imgNo === 3 ? <Image src='/image/gun.svg' layout='fill' /> : null}
+      {props.imgNo === 2 ? (
+        <img src='/image/skull.svg' style={{ objectFit: 'cover' }} />
+      ) : null}
+      {props.imgNo === 3 ? (
+        <img src='/image/gun.svg' style={{ objectFit: 'cover' }} />
+      ) : null}
       {props.imgNo === 4 ? (
-        <Image src='/image/bottle.svg' layout='fill' />
+        <img src='/image/bottle.svg' style={{ objectFit: 'cover' }} />
       ) : null}
       {props.imgNo === 5 ? (
-        <Image src='/image/aircraft.svg' layout='fill' />
+        <img src='/image/aircraft.svg' style={{ objectFit: 'cover' }} />
       ) : null}
-      {props.imgNo === 6 ? <Image src='/image/shit.svg' layout='fill' /> : null}
+      {props.imgNo === 6 ? (
+        <img src='/image/shit.svg' style={{ objectFit: 'cover' }} />
+      ) : null}
     </ImageDiv>
   )
 }
