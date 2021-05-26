@@ -1,5 +1,5 @@
-import Image from '@/components/img'
 import styled from 'styled-components'
+import Image from 'next/image'
 
 const ImageDiv = styled.div`
   position: absolute;
@@ -49,22 +49,22 @@ const NFTImage = (props: ImageProps) => {
   return (
     <ImageDiv className={`no_${props.imgNo}`}>
       {props.imgNo === 1 ? (
-        <Image src='/image/ufo.svg' style={{ objectFit: 'cover' }} />
+        <img src='/image/ufo.svg' style={{ objectFit: 'cover' }} />
       ) : null}
       {props.imgNo === 2 ? (
-        <Image src='/image/skull.svg' style={{ objectFit: 'cover' }} />
+        <img src='/image/skull.svg' style={{ objectFit: 'cover' }} />
       ) : null}
       {props.imgNo === 3 ? (
-        <Image src='/image/gun.svg' style={{ objectFit: 'cover' }} />
+        <img src='/image/gun.svg' style={{ objectFit: 'cover' }} />
       ) : null}
       {props.imgNo === 4 ? (
-        <Image src='/image/bottle.svg' style={{ objectFit: 'cover' }} />
+        <img src='/image/bottle.svg' style={{ objectFit: 'cover' }} />
       ) : null}
       {props.imgNo === 5 ? (
-        <Image src='/image/aircraft.svg' style={{ objectFit: 'cover' }} />
+        <img src='/image/aircraft.svg' style={{ objectFit: 'cover' }} />
       ) : null}
       {props.imgNo === 6 ? (
-        <Image src='/image/shit.svg' style={{ objectFit: 'cover' }} />
+        <img src='/image/shit.svg' style={{ objectFit: 'cover' }} />
       ) : null}
     </ImageDiv>
   )
