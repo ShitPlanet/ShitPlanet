@@ -1,8 +1,8 @@
 import Background from '@/components/Background'
 import Footer from '@/components/Footer'
 import Header from '@/components/Header'
+import Image from '@/components/img'
 import styled from 'styled-components'
-import Image from 'next/image'
 
 const Main = styled.div`
   position: relative;
@@ -101,7 +101,7 @@ const Mining = () => {
         </Card3>
         <Button>Claim your shit coins</Button>
         <Img>
-          <img src='/image/ufo.svg' style={{ objectFit: 'cover' }} />
+          <Image src='/image/ufo.svg' style={{ objectFit: 'cover' }} />
         </Img>
       </Main>
       <Footer />

@@ -11,7 +11,7 @@ const MyHead = () => (
     <meta name='copyright' content='LambdaCal, Inc' />
     <meta name='author' content={META.companyFullName} />
     <meta name='Robots' content='all' />
-    <link rel='shortcut icon' href='/favicon.ico'></link>
+    <link rel='shortcut icon' href={`${META.basePath}/favicon.ico`}></link>
   </Head>
 )
 

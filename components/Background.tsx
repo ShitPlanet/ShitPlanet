@@ -1,7 +1,8 @@
 import styled from 'styled-components'
-import Image from 'next/image'
+
 import { useEffect, useRef } from 'react'
 import Lottie from 'lottie-web'
+import Image from '@/components/img'
 
 const BG = styled.div`
   position: absolute;
@@ -157,19 +158,19 @@ const Background = (props: IProps) => {
       {/* {props.phase === 3 ? <Div></Div> : <Stars ref={dom}></Stars>} */}
       {props.phase === 3 ? null : (
         <Img1>
-          <img src='/image/aircraft.svg' style={{ objectFit: 'cover' }} />
+          <Image src='/image/aircraft.svg' style={{ objectFit: 'cover' }} />
         </Img1>
       )}
       <Img3>
-        <img src='/image/sun.svg' style={{ objectFit: 'cover' }} />
+        <Image src='/image/sun.svg' style={{ objectFit: 'cover' }} />
       </Img3>
       {props.phase === 3 ? null : (
         <Img4>
-          <img src='/image/saturn.svg' style={{ objectFit: 'cover' }} />
+          <Image src='/image/saturn.svg' style={{ objectFit: 'cover' }} />
         </Img4>
       )}
       <Img5>
-        <img src='/image/moon.svg' style={{ objectFit: 'cover' }} />
+        <Image src='/image/moon.svg' style={{ objectFit: 'cover' }} />
       </Img5>
     </Wrap>
   )

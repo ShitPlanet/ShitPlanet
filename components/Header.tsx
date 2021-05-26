@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import Image from 'next/image'
+import Image from '@/components/img'
+
 import { useStore } from '@/store'
 import { notification } from 'antd'
 import { blockchain } from '@/config/constants/meta'
@@ -162,10 +163,10 @@ const Header = () => {
       <Container>
         <Brand href='/'>
           <ImgWrap>
-            <img src='/image/brand.svg' style={{ objectFit: 'cover' }} />
+            <Image src='/image/brand.svg' style={{ objectFit: 'cover' }} />
           </ImgWrap>
           <Name>
-            <img src='/image/logo.svg' style={{ objectFit: 'cover' }} />
+            <Image src='/image/logo.svg' style={{ objectFit: 'cover' }} />
           </Name>
         </Brand>
         <Nav>

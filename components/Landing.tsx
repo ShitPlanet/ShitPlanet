@@ -1,7 +1,8 @@
 import Header from './Header'
 import Footer from './Footer'
 import styled from 'styled-components'
-import Image from 'next/image'
+import Image from '@/components/img'
+
 import Background from './Background'
 import { useEffect, useState } from 'react'
 import MinterWrap from './MinterWrap'
@@ -144,7 +145,7 @@ const Landing = () => {
               id='leading_target_1'
               onClick={() => setPhase(phase === 1 ? 2 : 1)}>
               <Icon>
-                <img
+                <Image
                   src='/image/icon-planet.svg'
                   style={{ objectFit: 'cover' }}
                 />
@@ -154,7 +155,7 @@ const Landing = () => {
           </Container>
           <MinterWrap phase={phase} cancel={() => setPhase(1)} />
           <Img className={phase === 2 ? 'left' : ''}>
-            <img src='/image/ufo.svg' style={{ objectFit: 'cover' }} />
+            <Image src='/image/ufo.svg' style={{ objectFit: 'cover' }} />
           </Img>
         </Main>
         <Footer />

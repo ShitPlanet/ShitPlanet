@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
+import Image from '@/components/img'
+
 import styled from 'styled-components'
 
 const Div = styled.div`
@@ -52,7 +53,7 @@ const Leading = (props: IProps) => {
     <Div>
       <Img onClick={() => setStep(step + 1)}>
         {step === 0 ? (
-          <img src='/image/step1.svg' style={{ objectFit: 'cover' }} />
+          <Image src='/image/step1.svg' style={{ objectFit: 'cover' }} />
         ) : null}
         <Button onClick={props.skip}>SKIP</Button>
       </Img>
